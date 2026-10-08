@@ -9,14 +9,14 @@ type Command = { label: string; hint: string; href?: string; external?: boolean;
 
 const sections: Command[] = [
   { label: "About", hint: "Section", href: "#about" },
-  { label: "Services", hint: "Section", href: "#services" },
-  { label: "Work", hint: "Section", href: "#work" },
-  { label: "Achievements", hint: "Section", href: "#achievements" },
   { label: "Education", hint: "Section", href: "#tracks" },
   { label: "Experience", hint: "Section", href: "#experience" },
+  { label: "Achievements", hint: "Section", href: "#achievements" },
   ...(certifications.length ? [{ label: "Certifications", hint: "Section", href: "#certs" }] : []),
+  { label: "Work", hint: "Section", href: "#work" },
   { label: "Stack", hint: "Section", href: "#stack" },
   { label: "Lab", hint: "Section", href: "#lab" },
+  { label: "Services", hint: "Section", href: "#services" },
   { label: "Contact", hint: "Section", href: "#contact" },
 ];
 
@@ -29,7 +29,7 @@ const commands: Command[] = [
   ...(profile.resumeUrl ? [{ label: "Open resume", hint: "Link", href: profile.resumeUrl, external: true }] : []),
 ];
 
-const primary = ["Services", "Work", "Achievements", "Education", "Stack", "Contact"];
+const primary = ["About", "Education", "Achievements", "Work", "Services", "Contact"];
 
 export function Nav() {
   const { setLens } = useLens();

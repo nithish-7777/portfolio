@@ -122,7 +122,11 @@ export default function Home() {
     ),
 
     services: (
-      <Section id="services" label="Freelance" title="Need a website or web app? I build those.">
+      <Section id="services" label="Freelance" title="I also build websites and web apps for clients.">
+        <p className="mb-8 inline-flex items-center gap-2 rounded-full border border-line px-3 py-1.5 font-mono text-xs tracking-widest uppercase">
+          <span className="live-dot h-1.5 w-1.5 rounded-full bg-lime" />
+          {profile.availability}
+        </p>
         <div className="grid gap-4 sm:grid-cols-2">
           {services.map((service, index) => (
             <Reveal key={service.title} delay={index * 0.06}>
@@ -364,10 +368,6 @@ export default function Home() {
           <SignalField />
           <div className={`${shell} relative`}>
             <p className="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs tracking-widest text-muted uppercase">
-              <span className="flex items-center gap-2 rounded-full border border-line bg-bg/60 px-3 py-1.5 text-text backdrop-blur">
-                <span className="live-dot h-1.5 w-1.5 rounded-full bg-lime" />
-                {profile.availability}
-              </span>
               <span>{profile.location}</span>
             </p>
             <KineticName lines={profile.nameLines} label={profile.name} />
@@ -384,11 +384,8 @@ export default function Home() {
                   ))}
                 </ul>
                 <div className="flex flex-wrap gap-3 text-sm font-medium">
-                  <a
-                    href="#contact"
-                    className="rounded-full bg-text px-6 py-3 text-bg transition-opacity hover:opacity-85"
-                  >
-                    Get in touch
+                  <a href="#about" className="rounded-full bg-text px-6 py-3 text-bg transition-opacity hover:opacity-85">
+                    About me
                   </a>
                   <a
                     href="#work"

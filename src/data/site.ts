@@ -10,9 +10,9 @@ export const lenses: { id: Lens; label: string }[] = [
 
 // The order the sections appear in for each kind of reader.
 export const sectionOrder: Record<Lens, string[]> = {
-  everyone: ["about", "services", "work", "achievements", "tracks", "experience", "certs", "stack", "lab", "contact"],
+  everyone: ["about", "tracks", "experience", "achievements", "certs", "work", "stack", "lab", "services", "contact"],
   recruiter: ["about", "achievements", "tracks", "experience", "certs", "work", "stack", "lab", "services", "contact"],
-  client: ["services", "work", "about", "achievements", "stack", "experience", "certs", "tracks", "lab", "contact"],
+  client: ["about", "services", "work", "achievements", "certs", "stack", "experience", "tracks", "lab", "contact"],
 };
 
 export const profile = {
@@ -20,18 +20,18 @@ export const profile = {
   nameLines: ["NITHISH", "RAAJU V"],
   location: "Chennai, Tamil Nadu, India",
   coordinates: "13.08°N 80.27°E",
-  roles: ["Full-stack developer", "Freelance web developer", "CSE student"],
+  roles: ["CSE student", "Full-stack developer", "Freelance web developer"],
   availability: "Available for freelance web projects",
   tagline: {
     everyone:
-      "Computer science student on two degree tracks at once, and a freelance developer who builds websites and web apps that people actually use.",
+      "Computer science student from Chennai on two degree tracks at once, a three-time hackathon podium finisher, and a developer who likes software with a real job to do.",
     recruiter:
       "CSE student with a 9.20 CGPA and three hackathon podiums, studying data science at IIT Madras in parallel, with full-stack projects already shipped.",
     client:
       "I design and build fast, clean websites and web apps for businesses, from the first sketch to the live link.",
   } satisfies Record<Lens, string>,
   statement:
-    "I'm Nithish. I study computer science on two degree tracks, build websites and web apps for clients, and care most about software that has a real job to do.",
+    "I'm Nithish. I study computer science on two degree tracks, compete in hackathons, and build software that has a real job to do.",
   about: [
     "I'm a computer science and engineering student from Chennai, pursuing a B.E. at Saveetha Institute of Medical and Technical Sciences alongside the online BS in Data Science and Applications from IIT Madras.",
     "Outside class I freelance as a web developer. I take a project from the first conversation to a deployed, working product, and I stay around to fix and improve it.",
