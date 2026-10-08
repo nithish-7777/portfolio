@@ -32,12 +32,13 @@ export function CountUp({ value }: { value: string }) {
   useEffect(() => {
     const element = ref.current;
     if (!inView || !element || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const decimals = (value.split(".")[1] ?? "").length;
-    const controls = animate(0, parseFloat(value), {
+    const [, digits = "", suffix = ""] = value.match(/^([\d.]+)(.*)$/) ?? [];
+    const decimals = (digits.split(".")[1] ?? "").length;
+    const controls = animate(0, parseFloat(digits), {
       duration: 1.4,
       ease: "easeOut",
       onUpdate: (latest) => {
-        element.textContent = latest.toFixed(decimals).padStart(value.length, "0");
+        element.textContent = latest.toFixed(decimals).padStart(digits.length, "0") + suffix;
       },
     });
     return () => controls.stop();

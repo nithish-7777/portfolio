@@ -10,9 +10,9 @@ export const lenses: { id: Lens; label: string }[] = [
 
 // The order the sections appear in for each kind of reader.
 export const sectionOrder: Record<Lens, string[]> = {
-  everyone: ["about", "journey", "tracks", "experience", "achievements", "certs", "work", "stack", "lab", "services", "contact"],
-  recruiter: ["about", "journey", "achievements", "tracks", "experience", "certs", "work", "stack", "lab", "services", "contact"],
-  client: ["about", "services", "work", "journey", "achievements", "certs", "stack", "experience", "tracks", "lab", "contact"],
+  everyone: ["about", "ask", "tracks", "experience", "achievements", "certs", "work", "stack", "lab", "services", "contact"],
+  recruiter: ["about", "ask", "achievements", "tracks", "experience", "certs", "work", "stack", "lab", "services", "contact"],
+  client: ["about", "services", "work", "ask", "achievements", "certs", "stack", "experience", "tracks", "lab", "contact"],
 };
 
 export const profile = {
@@ -24,9 +24,9 @@ export const profile = {
   availability: "Available for freelance web projects",
   tagline: {
     everyone:
-      "Computer science student from Chennai on two degree tracks at once, a three-time hackathon podium finisher, and a developer who likes software with a real job to do.",
+      "Computer science student from Chennai on two degree tracks at once, a hackathon winner, and a developer who likes software with a real job to do.",
     recruiter:
-      "CSE student with a 9.20 CGPA and three hackathon podiums, studying data science at IIT Madras in parallel, with full-stack projects already shipped.",
+      "CSE student with a 9.20 CGPA and hackathon wins, studying data science at IIT Madras in parallel, with full-stack projects already shipped.",
     client:
       "I design and build fast, clean websites and web apps for businesses, from the first sketch to the live link.",
   } satisfies Record<Lens, string>,
@@ -40,7 +40,7 @@ export const profile = {
   stats: [
     { value: "9.20", label: "CGPA, B.E. CSE" },
     { value: "97", label: "Percentile, first year" },
-    { value: "03", label: "Hackathon podiums" },
+    { value: "5+", label: "Hackathons" },
   ],
   contactHeading: {
     everyone: ["Let's build", "something"],
@@ -55,20 +55,37 @@ export const profile = {
   resumeUrl: "/Nithish-Raaju-V-Resume.pdf",
 };
 
-export type JourneyStop = { year: string; kind: string; title: string; note: string; win?: boolean };
-
-export const journey: JourneyStop[] = [
-  { year: "2022", kind: "School", title: "Class 10, CBSE", note: "Kids Club CBSE School, Tiruppur." },
-  { year: "2024", kind: "School", title: "Class 12, CBSE", note: "Kids Club CBSE School. Then the move to Chennai." },
-  { year: "2024", kind: "College", title: "Started B.E. in CSE", note: "Saveetha Institute of Medical and Technical Sciences, Chennai." },
-  { year: "2025", kind: "Second degree", title: "Joined IIT Madras BS", note: "Data Science and Applications, online, alongside the B.E." },
-  { year: "2025", kind: "Certification", title: "AI For All", note: "Completed the AI Aware stage from Intel, CBSE and Digital India." },
-  { year: "2025", kind: "Merit", title: "97th percentile", note: "Certificate of Merit among 3,123 students in first-year exams.", win: true },
-  { year: "2025", kind: "Hackathon", title: "Won the Internal Hackathon", note: "Winner, Hackathon Club, SIMATS Engineering.", win: true },
-  { year: "2026", kind: "Work", title: "Python Developer", note: "Three months with Zaalima Development, working remotely." },
-  { year: "2026", kind: "Hackathon", title: "2nd place, Thiran Appathon", note: "Sri Eshwar College of Engineering, Coimbatore.", win: true },
-  { year: "2026", kind: "Hackathon", title: "1st place, Sathak-A-Thon 2.0", note: "Mohamed Sathak A.J. College of Engineering, Chennai.", win: true },
-  { year: "2028", kind: "Next", title: "Graduation", note: "B.E. Computer Science and Engineering, expected." },
+export const questions: { ask: string; answer: string }[] = [
+  {
+    ask: "Where are you from?",
+    answer:
+      "I did my schooling in Tiruppur, at Kids Club CBSE School, and came to Chennai for college. Chennai is home base now.",
+  },
+  {
+    ask: "Why two degrees at once?",
+    answer:
+      "Engineering teaches me how systems are built. Data science teaches me how to question what's inside them. I didn't want to pick one, so I'm doing a B.E. on campus and the IIT Madras BS online.",
+  },
+  {
+    ask: "How do you work?",
+    answer:
+      "Step by step. I build a small piece, test it, break it, fix it and push it to GitHub. I'd rather improve something that runs than plan something that doesn't.",
+  },
+  {
+    ask: "What problems pull you in?",
+    answer:
+      "The ones where software protects someone: security, fraud, privacy. And anything useful to ordinary people, like a parent tracking a school van or a pharmacist tracking stock.",
+  },
+  {
+    ask: "What are you aiming for?",
+    answer:
+      "Internships now, research-oriented work next, and higher studies abroad after that. Along the way, a portfolio of things that are actually in use.",
+  },
+  {
+    ask: "And away from code?",
+    answer:
+      "Music, mostly. I also spend too long tuning my Mac setup to save a few seconds, and I like building small creative web experiments for no reason at all.",
+  },
 ];
 
 export const services = [

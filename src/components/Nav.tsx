@@ -9,7 +9,7 @@ type Command = { label: string; hint: string; href?: string; external?: boolean;
 
 const sections: Command[] = [
   { label: "About", hint: "Section", href: "#about" },
-  { label: "Journey", hint: "Section", href: "#journey" },
+  { label: "Ask me", hint: "Section", href: "#ask" },
   { label: "Education", hint: "Section", href: "#tracks" },
   { label: "Experience", hint: "Section", href: "#experience" },
   { label: "Achievements", hint: "Section", href: "#achievements" },

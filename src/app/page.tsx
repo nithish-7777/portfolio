@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ContactForm } from "@/components/ContactForm";
-import { ChennaiClock, CursorLens, GitHubPulse, Journey, Tilt } from "@/components/Extras";
+import { AskMe, ChennaiClock, CursorLens, GitHubPulse, Tilt } from "@/components/Extras";
 import { KineticName } from "@/components/KineticName";
 import { LensDock, LensLines, LensProvider, LensSections, LensText } from "@/components/Lens";
 import { CountUp, ScrollWords, Spotlight } from "@/components/Motion";
@@ -16,7 +16,7 @@ import {
   coursework,
   experience,
   interests,
-  journey,
+  questions,
   lab,
   process,
   profile,
@@ -221,17 +221,12 @@ export default function Home() {
       </Section>
     ),
 
-    journey: (
-      <section id="journey" className="scroll-mt-24">
-        <Journey stops={journey}>
-          <div className={shell}>
-            <Label>Journey</Label>
-            <h2 className="mt-5 max-w-4xl font-head text-4xl leading-[1.02] font-semibold tracking-tight sm:text-6xl">
-              The story so far. Keep scrolling.
-            </h2>
-          </div>
-        </Journey>
-      </section>
+    ask: (
+      <Section id="ask" label="Ask me" title="Six things people usually ask me.">
+        <Reveal>
+          <AskMe questions={questions} />
+        </Reveal>
+      </Section>
     ),
 
     tracks: (
@@ -254,7 +249,7 @@ export default function Home() {
     ),
 
     achievements: (
-      <Section id="achievements" label="Achievements" title="Three podiums and a merit certificate.">
+      <Section id="achievements" label="Achievements" title="Hackathon wins and a merit certificate.">
         <div className="grid gap-4 sm:grid-cols-2">
           {achievements.map((award, index) => (
             <Reveal key={award.event} delay={index * 0.06}>
