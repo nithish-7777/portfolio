@@ -50,6 +50,8 @@ export const profile = {
   github: "https://github.com/nithish-7777",
   email: "nithishraaju72@gmail.com",
   linkedin: "https://www.linkedin.com/in/nithish-raaju-v-b4a563388",
+  whatsapp: "https://wa.me/919345581362",
+  instagram: "https://www.instagram.com/nith.isshhhh",
   resumeUrl: "/Nithish-Raaju-V-Resume.pdf",
 };
 

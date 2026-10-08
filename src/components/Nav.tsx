@@ -25,6 +25,8 @@ const commands: Command[] = [
   ...sections,
   ...lenses.map((lens) => ({ label: `Read as ${lens.label.toLowerCase()}`, hint: "View", lens: lens.id })),
   { label: "Send an email", hint: "Link", href: `mailto:${profile.email}` },
+  { label: "Message on WhatsApp", hint: "Link", href: profile.whatsapp, external: true },
+  { label: "Open Instagram", hint: "Link", href: profile.instagram, external: true },
   { label: "Open GitHub", hint: "Link", href: profile.github, external: true },
   ...(profile.linkedin ? [{ label: "Open LinkedIn", hint: "Link", href: profile.linkedin, external: true }] : []),
   ...(profile.resumeUrl ? [{ label: "Open resume", hint: "Link", href: profile.resumeUrl, external: true }] : []),

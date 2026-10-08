@@ -44,13 +44,23 @@ export function ContactForm() {
           >
             {profile.email}
           </a>
-          <button
-            type="button"
-            onClick={copy}
-            className="mt-4 rounded-full border border-line px-4 py-2 font-mono text-xs transition-colors hover:border-text"
-          >
-            {copied ? "Copied" : "Copy address"}
-          </button>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={copy}
+              className="rounded-full border border-line px-4 py-2 font-mono text-xs transition-colors hover:border-text"
+            >
+              {copied ? "Copied" : "Copy address"}
+            </button>
+            <a
+              href={profile.whatsapp}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-full bg-lime px-4 py-2 font-mono text-xs text-bg transition-opacity hover:opacity-85"
+            >
+              Chat on WhatsApp ↗
+            </a>
+          </div>
         </div>
         <p className="text-sm leading-relaxed text-muted">
           For freelance work, a line about what you need and when you need it is enough to start.

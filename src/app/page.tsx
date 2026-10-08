@@ -91,6 +91,8 @@ function AwardCard({ award }: { award: Award }) {
 
 export default function Home() {
   const links = [
+    { label: "WhatsApp", href: profile.whatsapp },
+    { label: "Instagram", href: profile.instagram },
     { label: "GitHub", href: profile.github },
     profile.linkedin && { label: "LinkedIn", href: profile.linkedin },
     profile.resumeUrl && { label: "Resume", href: profile.resumeUrl },
