@@ -1,37 +1,30 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fafaf7;
-  --foreground: #15171a;
-  --muted: #5b616b;
-  --line: #e2e1da;
-  --surface: #ffffff;
-  --accent: #0f766e;
-  --accent-contrast: #ffffff;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0b0d10;
-    --foreground: #eceef1;
-    --muted: #9aa2ad;
-    --line: #23272e;
-    --surface: #12151a;
-    --accent: #2dd4bf;
-    --accent-contrast: #06201d;
-  }
+  color-scheme: dark;
+  --bg: #0a0a09;
+  --surface: #121210;
+  --surface-2: #1b1b18;
+  --line: #2b2a25;
+  --text: #ece8df;
+  --muted: #9a958b;
+  /* Flagged and cleared: the two states of a scored transaction. */
+  --flag: #ff4d1f;
+  --clear: #cdf545;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
-  --color-line: var(--line);
+  --color-bg: var(--bg);
   --color-surface: var(--surface);
-  --color-accent: var(--accent);
-  --color-accent-contrast: var(--accent-contrast);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-flag: var(--flag);
+  --color-clear: var(--clear);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-head: var(--font-bricolage);
 }
 
 html {
@@ -39,7 +32,95 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--bg);
+  color: var(--text);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--clear);
+  color: var(--bg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--clear);
+  outline-offset: 3px;
+}
+
+.signal-field {
+  mask-image: linear-gradient(to bottom, black 35%, transparent 96%);
+}
+
+.kinetic-name {
+  font-size: clamp(3.75rem, 17.5vw, 17rem);
+  line-height: 0.84;
+  letter-spacing: -0.02em;
+  font-variation-settings: "wght" 800, "wdth" 75;
+}
+
+.range {
+  appearance: none;
+  height: 2px;
+  background: var(--line);
+  cursor: pointer;
+}
+.range::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--text);
+  border: 4px solid var(--bg);
+  box-shadow: 0 0 0 1px var(--text);
+}
+.range::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--text);
+  border: 4px solid var(--bg);
+  box-shadow: 0 0 0 1px var(--text);
+}
+
+@keyframes pulse-flag {
+  50% {
+    opacity: 0.45;
+  }
+}
+.pulse-flag {
+  animation: pulse-flag 1.6s ease-in-out infinite;
+}
+
+@keyframes swap {
+  0%,
+  42% {
+    opacity: 1;
+  }
+  50%,
+  92% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.swap-a {
+  animation: swap 6s infinite;
+}
+.swap-b {
+  animation: swap 6s infinite -3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .pulse-flag,
+  .swap-a,
+  .swap-b {
+    animation: none;
+  }
+  .swap-b {
+    opacity: 0;
+  }
 }
