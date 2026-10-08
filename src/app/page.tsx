@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ContactForm } from "@/components/ContactForm";
-import { AskMe, ChennaiClock, CursorLens, GitHubPulse, Tilt } from "@/components/Extras";
+import { AskMe, ChennaiClock, CursorLens, GitHubPulse, Journey, Tilt } from "@/components/Extras";
 import { KineticName } from "@/components/KineticName";
 import { LensDock, LensLines, LensProvider, LensSections, LensText } from "@/components/Lens";
 import { CountUp, ScrollWords, Spotlight } from "@/components/Motion";
@@ -16,6 +16,7 @@ import {
   coursework,
   experience,
   interests,
+  journey,
   questions,
   lab,
   process,
@@ -227,6 +228,19 @@ export default function Home() {
           <AskMe questions={questions} />
         </Reveal>
       </Section>
+    ),
+
+    journey: (
+      <section id="journey" className="scroll-mt-24">
+        <Journey stops={journey}>
+          <div className={shell}>
+            <Label>Journey</Label>
+            <h2 className="mt-5 max-w-4xl font-head text-4xl leading-[1.02] font-semibold tracking-tight sm:text-6xl">
+              Five turning points. Keep scrolling.
+            </h2>
+          </div>
+        </Journey>
+      </section>
     ),
 
     tracks: (

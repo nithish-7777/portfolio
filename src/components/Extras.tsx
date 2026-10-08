@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { profile } from "@/data/site";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { profile, type JourneyStop } from "@/data/site";
 
 /** A small glass lens that trails the cursor and swells over anything clickable. */
 export function CursorLens() {
@@ -191,6 +191,74 @@ export function AskMe({ questions }: { questions: { ask: string; answer: string 
             {questions[active].answer}
           </motion.p>
         </AnimatePresence>
+      </div>
+    </div>
+  );
+}
+
+function Stop({ stop }: { stop: JourneyStop }) {
+  return (
+    <li className="glass-card flex w-[min(78vw,23rem)] shrink-0 flex-col rounded-3xl p-7">
+      <p className="font-mono text-xs tracking-widest text-muted uppercase">{stop.kind}</p>
+      <p className={`mt-6 font-head text-6xl leading-none font-bold sm:text-7xl ${stop.win ? "text-lime" : "text-text"}`}>
+        {stop.year}
+      </p>
+      <h3 className="mt-6 font-head text-2xl leading-tight font-semibold">{stop.title}</h3>
+      <p className="mt-3 leading-relaxed text-muted">{stop.note}</p>
+    </li>
+  );
+}
+
+/**
+ * The story so far. The page pins in place and vertical scrolling drives the
+ * timeline sideways, one stop at a time.
+ */
+export function Journey({ stops, children }: { stops: JourneyStop[]; children: React.ReactNode }) {
+  const outer = useRef<HTMLDivElement>(null);
+  const track = useRef<HTMLOListElement>(null);
+  const [distance, setDistance] = useState(0);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: outer, offset: ["start start", "end end"] });
+  const x = useTransform(scrollYProgress, (value) => -value * distance);
+
+  useEffect(() => {
+    const element = track.current;
+    if (!element) return;
+    const measure = () => setDistance(Math.max(0, element.scrollWidth - window.innerWidth));
+    const observer = new ResizeObserver(measure);
+    observer.observe(element);
+    window.addEventListener("resize", measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
+
+  if (reduce) {
+    return (
+      <div className="py-24">
+        {children}
+        <ol className="mt-12 flex gap-4 overflow-x-auto px-5 pb-4 sm:px-8">
+          {stops.map((stop) => (
+            <Stop key={stop.title} stop={stop} />
+          ))}
+        </ol>
+      </div>
+    );
+  }
+
+  return (
+    <div ref={outer} style={{ height: `calc(100svh + ${distance}px)` }}>
+      <div className="sticky top-0 flex h-svh flex-col justify-center gap-10 overflow-hidden py-20">
+        {children}
+        <motion.ol ref={track} style={{ x }} className="flex w-max gap-4 px-5 sm:px-8">
+          {stops.map((stop) => (
+            <Stop key={stop.title} stop={stop} />
+          ))}
+        </motion.ol>
+        <div className="mx-5 h-px bg-line sm:mx-8">
+          <motion.div style={{ scaleX: scrollYProgress }} className="h-px origin-left bg-lime" />
+        </div>
       </div>
     </div>
   );

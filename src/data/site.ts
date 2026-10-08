@@ -10,9 +10,9 @@ export const lenses: { id: Lens; label: string }[] = [
 
 // The order the sections appear in for each kind of reader.
 export const sectionOrder: Record<Lens, string[]> = {
-  everyone: ["about", "ask", "tracks", "experience", "achievements", "certs", "work", "stack", "lab", "services", "contact"],
-  recruiter: ["about", "ask", "achievements", "tracks", "experience", "certs", "work", "stack", "lab", "services", "contact"],
-  client: ["about", "services", "work", "ask", "achievements", "certs", "stack", "experience", "tracks", "lab", "contact"],
+  everyone: ["about", "ask", "journey", "tracks", "experience", "achievements", "certs", "work", "stack", "lab", "services", "contact"],
+  recruiter: ["about", "ask", "journey", "achievements", "tracks", "experience", "certs", "work", "stack", "lab", "services", "contact"],
+  client: ["about", "services", "work", "ask", "journey", "achievements", "certs", "stack", "experience", "tracks", "lab", "contact"],
 };
 
 export const profile = {
@@ -86,6 +86,17 @@ export const questions: { ask: string; answer: string }[] = [
     answer:
       "Music, mostly. I also spend too long tuning my Mac setup to save a few seconds, and I like building small creative web experiments for no reason at all.",
   },
+];
+
+export type JourneyStop = { year: string; kind: string; title: string; note: string; win?: boolean };
+
+// Kept short on purpose: the turning points only. Results live in Achievements.
+export const journey: JourneyStop[] = [
+  { year: "2022", kind: "School", title: "Class 10 in Tiruppur", note: "Kids Club CBSE School, where it started." },
+  { year: "2024", kind: "College", title: "Started B.E. in CSE", note: "Saveetha Institute of Medical and Technical Sciences, Chennai." },
+  { year: "2025", kind: "Second degree", title: "Joined IIT Madras BS", note: "Data Science and Applications, online, alongside the B.E.", win: true },
+  { year: "2026", kind: "Work", title: "First developer role", note: "Python Developer at Zaalima Development, working remotely." },
+  { year: "2028", kind: "Next", title: "Graduation", note: "B.E. Computer Science and Engineering, expected." },
 ];
 
 export const services = [
