@@ -5,7 +5,7 @@ import { KineticName } from "@/components/KineticName";
 import { LensDock, LensLines, LensProvider, LensSections, LensText } from "@/components/Lens";
 import { CountUp, ScrollWords, Spotlight } from "@/components/Motion";
 import { Nav } from "@/components/Nav";
-import { ProjectVisual } from "@/components/ProjectVisual";
+import { PhoneFrame, ProjectVisual } from "@/components/ProjectVisual";
 import { Reveal } from "@/components/Reveal";
 import { SignalField } from "@/components/SignalField";
 import { Tracks } from "@/components/Tracks";
@@ -134,16 +134,30 @@ export default function Home() {
           <span className="live-dot h-1.5 w-1.5 rounded-full bg-lime" />
           {profile.availability}
         </p>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {services.map((service, index) => (
-            <Reveal key={service.title} delay={index * 0.06}>
-              <Spotlight className="glass-card h-full rounded-3xl p-7 sm:p-9">
-                <p className="font-mono text-xs text-hot">{String(index + 1).padStart(2, "0")}</p>
-                <h3 className="mt-6 font-head text-2xl leading-tight font-semibold sm:text-3xl">{service.title}</h3>
-                <p className="mt-3 max-w-md leading-relaxed text-muted">{service.note}</p>
-              </Spotlight>
-            </Reveal>
-          ))}
+        <div className="grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:items-center">
+          <div className="grid gap-4 sm:grid-cols-2">
+            {services.map((service, index) => (
+              <Reveal key={service.title} delay={index * 0.06}>
+                <Spotlight className="glass-card h-full rounded-3xl p-7 sm:p-9">
+                  <p className="font-mono text-xs text-hot">{String(index + 1).padStart(2, "0")}</p>
+                  <h3 className="mt-6 font-head text-2xl leading-tight font-semibold sm:text-3xl">{service.title}</h3>
+                  <p className="mt-3 max-w-md leading-relaxed text-muted">{service.note}</p>
+                </Spotlight>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal className="flex items-center justify-center py-6">
+            {projects
+              .filter((project) => project.shot)
+              .map((project, index) => (
+                <PhoneFrame
+                  key={project.title}
+                  src={project.shot!}
+                  alt={`${project.title} running on a phone`}
+                  className={index === 0 ? "z-10 -rotate-6" : "-ml-10 translate-y-8 rotate-6"}
+                />
+              ))}
+          </Reveal>
         </div>
         <Reveal className="mt-16">
           <p className="font-mono text-xs tracking-widest text-muted uppercase">How a project runs</p>
@@ -214,7 +228,7 @@ export default function Home() {
                   )}
                 </div>
               </div>
-              <ProjectVisual kind={project.visual} />
+              <ProjectVisual kind={project.visual} shot={project.shot} title={project.title} />
             </Spotlight>
           ))}
         </div>

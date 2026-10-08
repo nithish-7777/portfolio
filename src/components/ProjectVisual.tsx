@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { VisualKind } from "@/data/site";
 
 // Small animated sketches of what each project does. The figures are illustrative.
@@ -169,7 +170,28 @@ const visuals: Record<VisualKind, () => React.ReactNode> = {
   split: Split,
 };
 
-export function ProjectVisual({ kind }: { kind: VisualKind }) {
+/** A real app screenshot presented inside a phone. */
+export function PhoneFrame({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
+  return (
+    <div className={`phone relative aspect-[9/19] w-44 shrink-0 rounded-[2rem] p-1.5 sm:w-52 ${className}`}>
+      <div className="relative h-full w-full overflow-hidden rounded-[1.6rem] bg-black">
+        <span className="absolute top-2 left-1/2 h-3.5 w-14 -translate-x-1/2 rounded-full bg-surface-2" />
+        <div className="absolute inset-x-0 top-8 bottom-0">
+          <Image src={src} alt={alt} fill sizes="208px" className="object-cover object-top" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function ProjectVisual({ kind, shot, title }: { kind: VisualKind; shot?: string; title: string }) {
+  if (shot) {
+    return (
+      <div className="flex min-h-64 items-center justify-center rounded-xl border border-line bg-bg p-6 sm:p-8">
+        <PhoneFrame src={shot} alt={`${title} running on a phone`} />
+      </div>
+    );
+  }
   const Visual = visuals[kind];
   return (
     <div aria-hidden className="flex min-h-64 items-center rounded-xl border border-line bg-bg p-6 sm:p-8">

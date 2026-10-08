@@ -237,6 +237,8 @@ export type Project = {
   repo: string;
   live?: string;
   visual: VisualKind;
+  // A real screenshot, shown inside a phone frame in place of the sketch.
+  shot?: string;
 };
 
 export const projects: Project[] = [
@@ -249,6 +251,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Firebase"],
     repo: "https://github.com/nithish-7777/jr-erectors-pwa",
     visual: "attendance",
+    shot: "/shots/jr-erectors.jpg",
   },
   {
     title: "MediStore",
@@ -260,6 +263,7 @@ export const projects: Project[] = [
     repo: "https://github.com/nithish-7777/Medistore",
     live: "https://medistore-six.vercel.app",
     visual: "pharmacy",
+    shot: "/shots/medistore.jpg",
   },
   {
     title: "FraudShield Sentinel",
