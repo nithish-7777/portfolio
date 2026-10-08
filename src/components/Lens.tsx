@@ -93,7 +93,7 @@ export function LensDock() {
       <div
         role="radiogroup"
         aria-label="Who is reading"
-        className="flex items-center gap-1 rounded-full border border-line bg-bg/80 p-1 font-mono text-xs shadow-2xl backdrop-blur-md"
+        className="glass flex items-center gap-1 rounded-full p-1 font-mono text-xs"
       >
         <span className="hidden pr-1 pl-3 text-muted sm:inline">Reading as</span>
         {lenses.map((option) => (

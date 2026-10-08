@@ -10,9 +10,9 @@ export const lenses: { id: Lens; label: string }[] = [
 
 // The order the sections appear in for each kind of reader.
 export const sectionOrder: Record<Lens, string[]> = {
-  everyone: ["about", "tracks", "experience", "achievements", "certs", "work", "stack", "lab", "services", "contact"],
-  recruiter: ["about", "achievements", "tracks", "experience", "certs", "work", "stack", "lab", "services", "contact"],
-  client: ["about", "services", "work", "achievements", "certs", "stack", "experience", "tracks", "lab", "contact"],
+  everyone: ["about", "journey", "tracks", "experience", "achievements", "certs", "work", "stack", "lab", "services", "contact"],
+  recruiter: ["about", "journey", "achievements", "tracks", "experience", "certs", "work", "stack", "lab", "services", "contact"],
+  client: ["about", "services", "work", "journey", "achievements", "certs", "stack", "experience", "tracks", "lab", "contact"],
 };
 
 export const profile = {
@@ -50,9 +50,24 @@ export const profile = {
   github: "https://github.com/nithish-7777",
   email: "nithishraaju72@gmail.com",
   linkedin: "https://www.linkedin.com/in/nithish-raaju-v-b4a563388",
-  // Add a link to your resume PDF to show a Resume button.
-  resumeUrl: "",
+  resumeUrl: "/Nithish-Raaju-V-Resume.pdf",
 };
+
+export type JourneyStop = { year: string; kind: string; title: string; note: string; win?: boolean };
+
+export const journey: JourneyStop[] = [
+  { year: "2022", kind: "School", title: "Class 10, CBSE", note: "Kids Club CBSE School, Tiruppur." },
+  { year: "2024", kind: "School", title: "Class 12, CBSE", note: "Kids Club CBSE School. Then the move to Chennai." },
+  { year: "2024", kind: "College", title: "Started B.E. in CSE", note: "Saveetha Institute of Medical and Technical Sciences, Chennai." },
+  { year: "2025", kind: "Second degree", title: "Joined IIT Madras BS", note: "Data Science and Applications, online, alongside the B.E." },
+  { year: "2025", kind: "Certification", title: "AI For All", note: "Completed the AI Aware stage from Intel, CBSE and Digital India." },
+  { year: "2025", kind: "Merit", title: "97th percentile", note: "Certificate of Merit among 3,123 students in first-year exams.", win: true },
+  { year: "2025", kind: "Hackathon", title: "Won the Internal Hackathon", note: "Winner, Hackathon Club, SIMATS Engineering.", win: true },
+  { year: "2026", kind: "Work", title: "Python Developer", note: "Three months with Zaalima Development, working remotely." },
+  { year: "2026", kind: "Hackathon", title: "2nd place, Thiran Appathon", note: "Sri Eshwar College of Engineering, Coimbatore.", win: true },
+  { year: "2026", kind: "Hackathon", title: "1st place, Sathak-A-Thon 2.0", note: "Mohamed Sathak A.J. College of Engineering, Chennai.", win: true },
+  { year: "2028", kind: "Next", title: "Graduation", note: "B.E. Computer Science and Engineering, expected." },
+];
 
 export const services = [
   {

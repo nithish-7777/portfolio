@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ContactForm } from "@/components/ContactForm";
+import { ChennaiClock, CursorLens, GitHubPulse, Journey, Tilt } from "@/components/Extras";
 import { KineticName } from "@/components/KineticName";
 import { LensDock, LensLines, LensProvider, LensSections, LensText } from "@/components/Lens";
 import { CountUp, ScrollWords, Spotlight } from "@/components/Motion";
@@ -15,6 +16,7 @@ import {
   coursework,
   experience,
   interests,
+  journey,
   lab,
   process,
   profile,
@@ -59,13 +61,14 @@ function Section({
 
 function AwardCard({ award }: { award: Award }) {
   return (
-    <Spotlight className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-surface">
+    <Tilt className="h-full">
+    <Spotlight className="glass-card group flex h-full flex-col overflow-hidden rounded-3xl">
       <a
         href={award.image}
         target="_blank"
         rel="noreferrer"
         aria-label={`View certificate: ${award.title}, ${award.event}`}
-        className="relative block aspect-[7/5] overflow-hidden bg-surface-2"
+        className="relative block aspect-[7/5] overflow-hidden bg-black/30"
       >
         <Image
           src={award.image}
@@ -82,6 +85,7 @@ function AwardCard({ award }: { award: Award }) {
         <p className="mt-2 text-muted">{award.issuer}</p>
       </div>
     </Spotlight>
+    </Tilt>
   );
 }
 
@@ -130,7 +134,7 @@ export default function Home() {
         <div className="grid gap-4 sm:grid-cols-2">
           {services.map((service, index) => (
             <Reveal key={service.title} delay={index * 0.06}>
-              <Spotlight className="h-full rounded-3xl border border-line bg-surface p-7 sm:p-9">
+              <Spotlight className="glass-card h-full rounded-3xl p-7 sm:p-9">
                 <p className="font-mono text-xs text-hot">{String(index + 1).padStart(2, "0")}</p>
                 <h3 className="mt-6 font-head text-2xl leading-tight font-semibold sm:text-3xl">{service.title}</h3>
                 <p className="mt-3 max-w-md leading-relaxed text-muted">{service.note}</p>
@@ -140,9 +144,9 @@ export default function Home() {
         </div>
         <Reveal className="mt-16">
           <p className="font-mono text-xs tracking-widest text-muted uppercase">How a project runs</p>
-          <ol className="mt-6 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+          <ol className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {process.map((stage, index) => (
-              <li key={stage.step} className="bg-bg p-6">
+              <li key={stage.step} className="glass-card rounded-2xl p-6">
                 <p className="font-mono text-xs text-muted">Step {index + 1}</p>
                 <h3 className="mt-3 font-head text-xl font-semibold">{stage.step}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{stage.note}</p>
@@ -167,7 +171,7 @@ export default function Home() {
               as="article"
               key={project.title}
               style={{ top: `${5.5 + index * 0.9}rem` }}
-              className="grid gap-8 rounded-3xl border border-line bg-surface p-6 sm:p-10 lg:sticky lg:grid-cols-[1.15fr_1fr] lg:items-center"
+              className="glass-deep grid gap-8 rounded-3xl p-6 sm:p-10 lg:sticky lg:grid-cols-[1.15fr_1fr] lg:items-center"
             >
               <div>
                 <p className="flex items-center gap-4 font-mono text-xs tracking-widest text-muted uppercase">
@@ -211,7 +215,21 @@ export default function Home() {
             </Spotlight>
           ))}
         </div>
+        <GitHubPulse />
       </Section>
+    ),
+
+    journey: (
+      <section id="journey" className="scroll-mt-24">
+        <Journey stops={journey}>
+          <div className={shell}>
+            <Label>Journey</Label>
+            <h2 className="mt-5 max-w-4xl font-head text-4xl leading-[1.02] font-semibold tracking-tight sm:text-6xl">
+              The story so far. Keep scrolling.
+            </h2>
+          </div>
+        </Journey>
+      </section>
     ),
 
     tracks: (
@@ -288,7 +306,7 @@ export default function Home() {
         <div className="border-t border-line">
           {stack.map((layer, index) => (
             <Reveal key={layer.layer} delay={index * 0.05}>
-              <div className="group grid gap-4 border-b border-line py-7 transition-colors hover:bg-surface md:grid-cols-[16rem_1fr] md:items-center md:px-4">
+              <div className="group grid gap-4 border-b border-line py-7 transition-colors hover:bg-white/5 md:grid-cols-[16rem_1fr] md:items-center md:px-4">
                 <div>
                   <h3 className="font-head text-2xl font-semibold sm:text-3xl">{layer.layer}</h3>
                   <p className="mt-1 font-mono text-xs tracking-wider text-muted uppercase">{layer.role}</p>
@@ -297,7 +315,7 @@ export default function Home() {
                   {layer.items.map((item) => (
                     <li
                       key={item}
-                      className="rounded-lg bg-surface-2 px-4 py-2 text-sm transition-colors group-hover:bg-bg"
+                      className="glass-card rounded-lg px-4 py-2 text-sm"
                     >
                       {item}
                     </li>
@@ -312,9 +330,9 @@ export default function Home() {
 
     lab: (
       <Section id="lab" label="Lab" title="Ideas I'm still turning over.">
-        <ul className="grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {lab.map((item) => (
-            <li key={item.title} className="flex flex-col bg-surface p-7">
+            <li key={item.title} className="glass-card flex flex-col rounded-3xl p-7">
               <span className="self-start rounded-full border border-line px-3 py-1 font-mono text-[10px] tracking-widest text-muted uppercase">
                 {item.tag}
               </span>
@@ -322,7 +340,7 @@ export default function Home() {
               <p className="mt-3 leading-relaxed text-muted">{item.note}</p>
             </li>
           ))}
-          <li className="flex flex-col justify-between bg-surface p-7">
+          <li className="glass-card flex flex-col justify-between rounded-3xl p-7">
             <p className="font-mono text-[10px] tracking-widest text-muted uppercase">Also into</p>
             <p className="mt-6 leading-relaxed text-muted">{interests.join(" · ")}</p>
           </li>
@@ -361,6 +379,12 @@ export default function Home() {
 
   return (
     <LensProvider>
+      <div aria-hidden className="aurora">
+        <span />
+        <span />
+        <span />
+      </div>
+      <CursorLens />
       <Nav />
 
       <main id="top">
@@ -368,6 +392,7 @@ export default function Home() {
           <SignalField />
           <div className={`${shell} relative`}>
             <p className="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs tracking-widest text-muted uppercase">
+              <ChennaiClock />
               <span>{profile.location}</span>
             </p>
             <KineticName lines={profile.nameLines} label={profile.name} />
@@ -378,7 +403,7 @@ export default function Home() {
               <div className="flex flex-col gap-5 md:items-end">
                 <ul className="flex flex-wrap gap-2 font-mono text-xs md:justify-end">
                   {profile.roles.map((role) => (
-                    <li key={role} className="rounded-full border border-line bg-bg/60 px-3 py-1.5 backdrop-blur">
+                    <li key={role} className="glass rounded-full px-3 py-1.5">
                       {role}
                     </li>
                   ))}
@@ -389,10 +414,20 @@ export default function Home() {
                   </a>
                   <a
                     href="#work"
-                    className="rounded-full border border-line bg-bg/60 px-6 py-3 backdrop-blur transition-colors hover:border-text"
+                    className="glass rounded-full px-6 py-3 transition-colors hover:border-text"
                   >
                     See my work
                   </a>
+                  {profile.resumeUrl && (
+                    <a
+                      href={profile.resumeUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="glass rounded-full px-6 py-3 transition-colors hover:border-text"
+                    >
+                      Resume ↓
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

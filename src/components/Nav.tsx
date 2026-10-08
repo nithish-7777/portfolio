@@ -9,6 +9,7 @@ type Command = { label: string; hint: string; href?: string; external?: boolean;
 
 const sections: Command[] = [
   { label: "About", hint: "Section", href: "#about" },
+  { label: "Journey", hint: "Section", href: "#journey" },
   { label: "Education", hint: "Section", href: "#tracks" },
   { label: "Experience", hint: "Section", href: "#experience" },
   { label: "Achievements", hint: "Section", href: "#achievements" },
@@ -91,18 +92,18 @@ export function Nav() {
         <div className="mx-auto flex max-w-[92rem] items-center justify-between px-5 py-4 sm:px-8">
           <a
             href="#top"
-            className="rounded-full border border-line bg-bg/70 px-4 py-2 font-mono text-xs tracking-wide backdrop-blur-md"
+            className="glass rounded-full px-4 py-2 font-mono text-xs tracking-wide"
           >
             NRV<span className="text-hot">_</span>
           </a>
-          <nav className="hidden items-center gap-1 rounded-full border border-line bg-bg/70 p-1 font-mono text-xs backdrop-blur-md lg:flex">
+          <nav className="glass hidden items-center gap-1 rounded-full p-1 font-mono text-xs lg:flex">
             {sections
               .filter((section) => primary.includes(section.label))
               .map((section) => (
                 <a
                   key={section.href}
                   href={section.href}
-                  className="rounded-full px-3 py-1.5 text-muted transition-colors hover:bg-surface-2 hover:text-text"
+                  className="rounded-full px-3 py-1.5 text-muted transition-colors hover:bg-white/10 hover:text-text"
                 >
                   {section.label}
                 </a>
@@ -111,7 +112,7 @@ export function Nav() {
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="flex items-center gap-2 rounded-full border border-line bg-bg/70 px-4 py-2 font-mono text-xs text-muted backdrop-blur-md transition-colors hover:text-text"
+            className="glass flex items-center gap-2 rounded-full px-4 py-2 font-mono text-xs text-muted transition-colors hover:text-text"
           >
             <span className="hidden sm:inline">Jump to</span>
             <span className="sm:hidden">Menu</span>
@@ -129,7 +130,7 @@ export function Nav() {
           onClick={close}
         >
           <div
-            className="w-full max-w-lg overflow-hidden rounded-2xl border border-line bg-surface shadow-2xl"
+            className="glass-deep w-full max-w-lg overflow-hidden rounded-2xl"
             onClick={(event) => event.stopPropagation()}
           >
             <input
@@ -152,7 +153,7 @@ export function Nav() {
                     onClick={() => run(command)}
                     onMouseEnter={() => setActive(index)}
                     className={`flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm ${
-                      index === active ? "bg-surface-2 text-text" : "text-muted"
+                      index === active ? "bg-white/10 text-text" : "text-muted"
                     }`}
                   >
                     {command.label}

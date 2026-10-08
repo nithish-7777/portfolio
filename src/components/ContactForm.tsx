@@ -31,11 +31,11 @@ export function ContactForm() {
   };
 
   const field =
-    "mt-2 w-full rounded-xl border border-line bg-bg px-4 py-3 outline-none transition-colors placeholder:text-muted/60 focus:border-lime";
+    "mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 outline-none transition-colors placeholder:text-muted/60 focus:border-lime";
 
   return (
-    <div className="grid gap-px overflow-hidden rounded-3xl border border-line bg-line lg:grid-cols-[1fr_1.3fr]">
-      <div className="flex flex-col justify-between gap-10 bg-surface p-6 sm:p-10">
+    <div className="grid gap-4 lg:grid-cols-[1fr_1.3fr]">
+      <div className="glass-card flex flex-col justify-between gap-10 rounded-3xl p-6 sm:p-10">
         <div>
           <p className="font-mono text-xs tracking-widest text-muted uppercase">Write to me directly</p>
           <a
@@ -57,7 +57,7 @@ export function ContactForm() {
         </p>
       </div>
 
-      <form onSubmit={submit} className="space-y-6 bg-surface p-6 sm:p-10">
+      <form onSubmit={submit} className="glass-card space-y-6 rounded-3xl p-6 sm:p-10">
         <fieldset>
           <legend className="font-mono text-xs tracking-widest text-muted uppercase">What do you need?</legend>
           <div className="mt-3 flex flex-wrap gap-2">
