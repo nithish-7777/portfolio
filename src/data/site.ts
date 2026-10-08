@@ -10,9 +10,9 @@ export const lenses: { id: Lens; label: string }[] = [
 
 // The order the sections appear in for each kind of reader.
 export const sectionOrder: Record<Lens, string[]> = {
-  everyone: ["about", "services", "work", "tracks", "milestones", "certs", "stack", "lab", "contact"],
-  recruiter: ["about", "tracks", "milestones", "certs", "work", "stack", "lab", "services", "contact"],
-  client: ["services", "work", "about", "stack", "milestones", "certs", "tracks", "lab", "contact"],
+  everyone: ["about", "services", "work", "achievements", "tracks", "experience", "certs", "stack", "lab", "contact"],
+  recruiter: ["about", "achievements", "tracks", "experience", "certs", "work", "stack", "lab", "services", "contact"],
+  client: ["services", "work", "about", "achievements", "stack", "experience", "certs", "tracks", "lab", "contact"],
 };
 
 export const profile = {
@@ -26,7 +26,7 @@ export const profile = {
     everyone:
       "Computer science student on two degree tracks at once, and a freelance developer who builds websites and web apps that people actually use.",
     recruiter:
-      "CSE student with a 9.20 CGPA, studying data science at IIT Madras in parallel, with full-stack and machine-learning projects already shipped.",
+      "CSE student with a 9.20 CGPA and three hackathon podiums, studying data science at IIT Madras in parallel, with full-stack projects already shipped.",
     client:
       "I design and build fast, clean websites and web apps for businesses, from the first sketch to the live link.",
   } satisfies Record<Lens, string>,
@@ -39,8 +39,8 @@ export const profile = {
   ],
   stats: [
     { value: "9.20", label: "CGPA, B.E. CSE" },
-    { value: "02", label: "Degrees in parallel" },
-    { value: "23", label: "Public repositories" },
+    { value: "97", label: "Percentile, first year" },
+    { value: "03", label: "Hackathon podiums" },
   ],
   contactHeading: {
     everyone: ["Let's build", "something"],
@@ -49,8 +49,8 @@ export const profile = {
   } satisfies Record<Lens, string[]>,
   github: "https://github.com/nithish-7777",
   email: "nithishraaju72@gmail.com",
-  // Fill these in to show them in the contact section and command palette.
-  linkedin: "",
+  linkedin: "https://www.linkedin.com/in/nithish-raaju-v-b4a563388",
+  // Add a link to your resume PDF to show a Resume button.
   resumeUrl: "",
 };
 
@@ -85,7 +85,7 @@ export const tracks = [
     id: "saveetha",
     code: "TRACK A",
     school: "Saveetha Institute of Medical and Technical Sciences",
-    place: "Chennai · On campus",
+    place: "Chennai · 2024 to 2028",
     degree: "B.E. Computer Science and Engineering",
     highlight: "CGPA 9.20",
     gives: "Systems thinking",
@@ -99,9 +99,9 @@ export const tracks = [
     id: "iitm",
     code: "TRACK B",
     school: "Indian Institute of Technology Madras",
-    place: "Online · Dual-degree path",
+    place: "Online · 2025 to present",
     degree: "BS Data Science and Applications",
-    highlight: "In progress",
+    highlight: "Foundation level",
     gives: "Statistical thinking",
     points: [
       "Mathematics and statistics for data science",
@@ -124,18 +124,62 @@ export const coursework = [
   "Embedded Systems",
 ];
 
-// Add awards, hackathon results, ranks and anything else worth showing off.
-export const milestones: { title: string; note: string }[] = [
-  { title: "9.20 CGPA", note: "Across the B.E. Computer Science and Engineering programme at Saveetha." },
-  { title: "Two degrees at once", note: "Studying the IIT Madras BS in Data Science alongside a full-time B.E." },
-  { title: "Live in production", note: "MediStore, a pharmacy management app, is deployed and publicly usable." },
-  { title: "Built for the field", note: "Shipped JR Erectors, an attendance and payroll PWA that works offline on site." },
-  { title: "Appathon build", note: "Built Split Wise, a bill-splitting app with UPI QR settlement, for an appathon." },
-  { title: "23 public repositories", note: "Coursework, experiments and finished projects, all in the open on GitHub." },
+export type Award = { title: string; event: string; issuer: string; date: string; image: string };
+
+export const achievements: Award[] = [
+  {
+    title: "1st place",
+    event: "Sathak-A-Thon 2.0",
+    issuer: "Mohamed Sathak A.J. College of Engineering, Chennai",
+    date: "April 2026",
+    image: "/certificates/sathak-a-thon.jpg",
+  },
+  {
+    title: "Winner",
+    event: "Internal Hackathon 2025",
+    issuer: "Hackathon Club, SIMATS Engineering",
+    date: "December 2025",
+    image: "/certificates/internal-hackathon.jpg",
+  },
+  {
+    title: "2nd place",
+    event: "Appathon, Thiran 2026",
+    issuer: "Sri Eshwar College of Engineering, Coimbatore",
+    date: "February 2026",
+    image: "/certificates/thiran-appathon.jpg",
+  },
+  {
+    title: "97th percentile",
+    event: "Certificate of Merit, CSE first year",
+    issuer: "Saveetha Institute of Medical and Technical Sciences · of 3,123 students",
+    date: "2024 to 2025",
+    image: "/certificates/merit.jpg",
+  },
 ];
 
-// Add each certificate here. The section appears on the site once this list has entries.
-export const certifications: { title: string; issuer: string; year: string; url?: string }[] = [];
+export const certifications: Award[] = [
+  {
+    title: "AI For All",
+    event: "AI Aware stage completed",
+    issuer: "Intel · CBSE · Digital India",
+    date: "August 2025",
+    image: "/certificates/ai-for-all.jpg",
+  },
+];
+
+export const experience = [
+  {
+    role: "Python Developer",
+    company: "Zaalima Development",
+    period: "January to March 2026 · Remote",
+    points: [
+      "Helped build backend systems with Python and REST APIs.",
+      "Supported development and testing of application features.",
+      "Worked with data using Pandas and NumPy.",
+      "Debugged and improved application performance.",
+    ],
+  },
+];
 
 export type VisualKind = "fraud" | "attendance" | "pharmacy" | "route" | "skills" | "split";
 
@@ -166,8 +210,8 @@ export const projects: Project[] = [
     kind: "Healthcare · Web app",
     problem: "Expired stock is money and safety lost.",
     description:
-      "Pharmacy management covering inventory, customers and sales, with alerts that surface medicines approaching expiry before they become a write-off.",
-    tech: ["React", "JavaScript", "CSS"],
+      "Online pharmacy and inventory system with medicine browsing, cart and checkout, a role-based admin dashboard, and alerts for stock that is running low or close to expiry.",
+    tech: ["Next.js", "Node.js", "JWT auth"],
     repo: "https://github.com/nithish-7777/Medistore",
     live: "https://medistore-six.vercel.app",
     visual: "pharmacy",
@@ -231,6 +275,11 @@ export const lab: { title: string; note: string; tag: string }[] = [
     tag: "Integration",
   },
   {
+    title: "Line-following robot",
+    note: "A differential-drive robot that tracks a path and adjusts its own speed as the line curves.",
+    tag: "Robotics",
+  },
+  {
     title: "SIM-swap governance",
     note: "A model for how telecoms and banks could coordinate to stop SIM-swap account takeovers.",
     tag: "Concept",
@@ -244,10 +293,10 @@ export const lab: { title: string; note: string; tag: string }[] = [
 
 export const stack: { layer: string; role: string; items: string[] }[] = [
   { layer: "Interface", role: "What people touch", items: ["React", "Next.js", "Tailwind CSS", "Flutter"] },
-  { layer: "Services", role: "Where the logic lives", items: ["Node.js", "FastAPI", "Celery", "Streamlit"] },
+  { layer: "Services", role: "Where the logic lives", items: ["Node.js", "FastAPI", "Flask", "REST APIs", "Celery", "Streamlit"] },
   { layer: "Data", role: "What it remembers", items: ["PostgreSQL", "Prisma", "Redis", "Firestore"] },
-  { layer: "Intelligence", role: "What it learns", items: ["Python", "scikit-learn", "Machine learning"] },
-  { layer: "Foundations", role: "What holds it up", items: ["Docker", "Git", "GitHub", "C++", "Java"] },
+  { layer: "Intelligence", role: "What it learns", items: ["Python", "Pandas", "NumPy", "scikit-learn"] },
+  { layer: "Foundations", role: "What holds it up", items: ["Docker", "Git", "GitHub", "C", "C++", "Java"] },
 ];
 
 export const interests = [

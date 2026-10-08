@@ -11,8 +11,9 @@ const sections: Command[] = [
   { label: "About", hint: "Section", href: "#about" },
   { label: "Services", hint: "Section", href: "#services" },
   { label: "Work", hint: "Section", href: "#work" },
+  { label: "Achievements", hint: "Section", href: "#achievements" },
   { label: "Education", hint: "Section", href: "#tracks" },
-  { label: "Milestones", hint: "Section", href: "#milestones" },
+  { label: "Experience", hint: "Section", href: "#experience" },
   ...(certifications.length ? [{ label: "Certifications", hint: "Section", href: "#certs" }] : []),
   { label: "Stack", hint: "Section", href: "#stack" },
   { label: "Lab", hint: "Section", href: "#lab" },
@@ -28,7 +29,7 @@ const commands: Command[] = [
   ...(profile.resumeUrl ? [{ label: "Open resume", hint: "Link", href: profile.resumeUrl, external: true }] : []),
 ];
 
-const primary = ["Services", "Work", "Education", "Milestones", "Stack", "Contact"];
+const primary = ["Services", "Work", "Achievements", "Education", "Stack", "Contact"];
 
 export function Nav() {
   const { setLens } = useLens();

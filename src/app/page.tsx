@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ContactForm } from "@/components/ContactForm";
 import { KineticName } from "@/components/KineticName";
 import { LensDock, LensLines, LensProvider, LensSections, LensText } from "@/components/Lens";
@@ -8,11 +9,13 @@ import { Reveal } from "@/components/Reveal";
 import { SignalField } from "@/components/SignalField";
 import { Tracks } from "@/components/Tracks";
 import {
+  achievements,
+  type Award,
   certifications,
   coursework,
+  experience,
   interests,
   lab,
-  milestones,
   process,
   profile,
   projects,
@@ -51,6 +54,34 @@ function Section({
       </Reveal>
       {children}
     </section>
+  );
+}
+
+function AwardCard({ award }: { award: Award }) {
+  return (
+    <Spotlight className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-surface">
+      <a
+        href={award.image}
+        target="_blank"
+        rel="noreferrer"
+        aria-label={`View certificate: ${award.title}, ${award.event}`}
+        className="relative block aspect-[7/5] overflow-hidden bg-surface-2"
+      >
+        <Image
+          src={award.image}
+          alt={`Certificate for ${award.title}, ${award.event}`}
+          fill
+          sizes="(min-width: 640px) 50vw, 100vw"
+          className="object-cover opacity-80 grayscale transition duration-500 group-hover:scale-[1.03] group-hover:opacity-100 group-hover:grayscale-0"
+        />
+      </a>
+      <div className="flex flex-1 flex-col p-7">
+        <p className="font-mono text-xs tracking-widest text-muted uppercase">{award.date}</p>
+        <h3 className="mt-4 font-head text-4xl leading-none font-bold text-lime">{award.title}</h3>
+        <p className="mt-3 text-xl leading-snug">{award.event}</p>
+        <p className="mt-2 text-muted">{award.issuer}</p>
+      </div>
+    </Spotlight>
   );
 }
 
@@ -198,17 +229,37 @@ export default function Home() {
       </Section>
     ),
 
-    milestones: (
-      <Section id="milestones" label="Milestones" title="What I've done so far.">
+    achievements: (
+      <Section id="achievements" label="Achievements" title="Three podiums and a merit certificate.">
+        <div className="grid gap-4 sm:grid-cols-2">
+          {achievements.map((award, index) => (
+            <Reveal key={award.event} delay={index * 0.06}>
+              <AwardCard award={award} />
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+    ),
+
+    experience: (
+      <Section id="experience" label="Experience" title="Where I've worked.">
         <div className="border-t border-line">
-          {milestones.map((milestone, index) => (
-            <Reveal key={milestone.title} delay={index * 0.04}>
-              <div className="group grid gap-2 border-b border-line py-7 transition-colors hover:bg-surface md:grid-cols-[5rem_1fr_1.2fr] md:items-baseline md:px-4">
-                <span className="font-mono text-xs text-muted transition-colors group-hover:text-lime">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3 className="font-head text-2xl leading-tight font-semibold sm:text-3xl">{milestone.title}</h3>
-                <p className="leading-relaxed text-muted">{milestone.note}</p>
+          {experience.map((job) => (
+            <Reveal key={job.company}>
+              <div className="grid gap-6 border-b border-line py-8 md:grid-cols-[1fr_1.2fr] md:px-4">
+                <div>
+                  <h3 className="font-head text-3xl leading-tight font-semibold sm:text-4xl">{job.role}</h3>
+                  <p className="mt-2 text-lg">{job.company}</p>
+                  <p className="mt-2 font-mono text-xs tracking-wider text-muted uppercase">{job.period}</p>
+                </div>
+                <ul className="space-y-2 text-muted">
+                  {job.points.map((point) => (
+                    <li key={point} className="flex gap-3">
+                      <span className="mt-[0.7em] h-px w-4 shrink-0 bg-line" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </Reveal>
           ))}
@@ -217,26 +268,11 @@ export default function Home() {
     ),
 
     certs: certifications.length > 0 && (
-      <Section id="certs" label="Certifications" title="Courses I finished and can prove.">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {certifications.map((cert, index) => (
-            <Reveal key={cert.title} delay={index * 0.05}>
-              <Spotlight className="flex h-full flex-col rounded-3xl border border-line bg-surface p-7">
-                <p className="font-mono text-xs tracking-widest text-muted uppercase">
-                  {cert.issuer} · {cert.year}
-                </p>
-                <h3 className="mt-5 flex-1 font-head text-2xl leading-tight font-semibold">{cert.title}</h3>
-                {cert.url && (
-                  <a
-                    href={cert.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-6 self-start text-sm font-medium text-lime hover:underline"
-                  >
-                    View certificate ↗
-                  </a>
-                )}
-              </Spotlight>
+      <Section id="certs" label="Certifications" title="Programmes I've completed.">
+        <div className="grid gap-4 sm:grid-cols-2">
+          {certifications.map((award, index) => (
+            <Reveal key={award.event} delay={index * 0.06}>
+              <AwardCard award={award} />
             </Reveal>
           ))}
         </div>
