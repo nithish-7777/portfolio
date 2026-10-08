@@ -289,6 +289,36 @@ body {
   }
 }
 
+/* Phones and tablets: blurring big areas over a moving background is what makes
+   scrolling stutter, so the background holds still and only the small floating
+   controls keep their blur. */
+@media (pointer: coarse) {
+  .aurora span {
+    animation: none;
+  }
+  .glass-card,
+  .glass-deep {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .glass-card {
+    background: linear-gradient(150deg, rgb(38 38 34 / 0.78), rgb(20 20 18 / 0.82));
+  }
+  .glass-deep {
+    background: linear-gradient(150deg, rgb(28 28 25 / 0.97), rgb(13 13 11 / 0.98));
+  }
+  .glass {
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    backdrop-filter: blur(12px) saturate(160%);
+  }
+  .tilt {
+    transform: none;
+  }
+  .tilt::after {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 
 type Ping = { x: number; y: number; born: number; warm: boolean };
 
-const GAP = 30;
 const PING_LIFE = 3200;
 const TEXT = "236,232,223";
 const WARM = "255,77,31";
@@ -23,6 +22,10 @@ export function SignalField() {
     if (!canvas || !ctx) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Phones get a sparser field at a lower resolution and half the frame rate.
+    const light = window.matchMedia("(pointer: coarse)").matches;
+    const GAP = light ? 40 : 30;
+    let lastFrame = 0;
     const pointer = { x: -9999, y: -9999 };
     let width = 0;
     let height = 0;
@@ -33,7 +36,7 @@ export function SignalField() {
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = light ? 1 : Math.min(window.devicePixelRatio || 1, 2);
       width = rect.width;
       height = rect.height;
       canvas.width = width * dpr;
@@ -54,6 +57,11 @@ export function SignalField() {
     };
 
     const draw = (now: number) => {
+      if (light && !reduce && now - lastFrame < 32) {
+        raf = requestAnimationFrame(draw);
+        return;
+      }
+      lastFrame = now;
       const t = now / 1000;
       ctx.clearRect(0, 0, width, height);
 

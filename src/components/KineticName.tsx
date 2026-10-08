@@ -12,6 +12,8 @@ export function KineticName({ lines, label }: { lines: string[]; label: string }
   useEffect(() => {
     const root = ref.current;
     if (!root || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Reshaping the letters every frame is too heavy for phones, and there is no cursor to follow.
+    if (window.matchMedia("(pointer: coarse)").matches) return;
 
     const letters = Array.from(root.querySelectorAll<HTMLElement>("[data-letter]"));
     const current = letters.map(() => 0);

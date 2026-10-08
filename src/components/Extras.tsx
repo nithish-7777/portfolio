@@ -182,9 +182,9 @@ export function AskMe({ questions }: { questions: { ask: string; answer: string 
         <AnimatePresence mode="wait" initial={false}>
           <motion.p
             key={active}
-            initial={reduce ? false : { opacity: 0, y: 16, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={reduce ? undefined : { opacity: 0, y: -10, filter: "blur(8px)" }}
+            initial={reduce ? false : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduce ? undefined : { opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
             className="mt-8 font-head text-2xl leading-snug font-medium text-pretty sm:text-3xl"
           >
