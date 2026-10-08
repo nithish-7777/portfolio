@@ -20,9 +20,9 @@ const bricolage = Bricolage_Grotesque({
 });
 
 export const metadata: Metadata = {
-  title: "Nithish Raaju V | Full-stack, AI and security",
+  title: "Nithish Raaju V | Full-stack and freelance web developer",
   description:
-    "Nithish Raaju V is a Chennai-based computer science student on two degree tracks, Saveetha and IIT Madras, building full-stack, AI and security software for real-world problems.",
+    "Nithish Raaju V is a Chennai-based computer science student on two degree tracks, Saveetha and IIT Madras, and a freelance web developer building websites, web apps and machine-learning projects.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

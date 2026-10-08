@@ -8,9 +8,8 @@
   --line: #2b2a25;
   --text: #ece8df;
   --muted: #9a958b;
-  /* Flagged and cleared: the two states of a scored transaction. */
-  --flag: #ff4d1f;
-  --clear: #cdf545;
+  --hot: #ff4d1f;
+  --lime: #cdf545;
 }
 
 @theme inline {
@@ -20,8 +19,8 @@
   --color-line: var(--line);
   --color-text: var(--text);
   --color-muted: var(--muted);
-  --color-flag: var(--flag);
-  --color-clear: var(--clear);
+  --color-hot: var(--hot);
+  --color-lime: var(--lime);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-head: var(--font-bricolage);
@@ -38,12 +37,12 @@ body {
 }
 
 ::selection {
-  background: var(--clear);
+  background: var(--lime);
   color: var(--bg);
 }
 
 :focus-visible {
-  outline: 2px solid var(--clear);
+  outline: 2px solid var(--lime);
   outline-offset: 3px;
 }
 
@@ -58,37 +57,67 @@ body {
   font-variation-settings: "wght" 800, "wdth" 75;
 }
 
-.range {
-  appearance: none;
-  height: 2px;
-  background: var(--line);
-  cursor: pointer;
+/* Letters rise into place when the page loads. */
+@keyframes letter-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.35em);
+    filter: blur(12px);
+  }
 }
-.range::-webkit-slider-thumb {
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 999px;
-  background: var(--text);
-  border: 4px solid var(--bg);
-  box-shadow: 0 0 0 1px var(--text);
-}
-.range::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-  border-radius: 999px;
-  background: var(--text);
-  border: 4px solid var(--bg);
-  box-shadow: 0 0 0 1px var(--text);
+.kinetic-name [data-letter] {
+  animation: letter-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
 }
 
-@keyframes pulse-flag {
+/* Section numbers follow whatever order the sections are shown in. */
+.sections {
+  counter-reset: section;
+}
+.sections > section {
+  counter-increment: section;
+}
+.section-label::before {
+  content: counter(section, decimal-leading-zero) " / ";
+  color: var(--hot);
+}
+
+/* Soft light that follows the cursor across a card. */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(460px circle at var(--mx, 50%) var(--my, 50%), rgb(205 245 69 / 0.1), transparent 62%);
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+}
+.spotlight:hover::before {
+  opacity: 1;
+}
+
+@keyframes live-dot {
+  50% {
+    box-shadow: 0 0 0 5px rgb(205 245 69 / 0);
+  }
+}
+.live-dot {
+  box-shadow: 0 0 0 0 rgb(205 245 69 / 0.6);
+  animation: live-dot 2s ease-out infinite;
+}
+
+@keyframes pulse-hot {
   50% {
     opacity: 0.45;
   }
 }
-.pulse-flag {
-  animation: pulse-flag 1.6s ease-in-out infinite;
+.pulse-hot {
+  animation: pulse-hot 1.6s ease-in-out infinite;
 }
 
 @keyframes swap {
@@ -115,9 +144,11 @@ body {
   html {
     scroll-behavior: auto;
   }
-  .pulse-flag,
+  .pulse-hot,
   .swap-a,
-  .swap-b {
+  .swap-b,
+  .live-dot,
+  .kinetic-name [data-letter] {
     animation: none;
   }
   .swap-b {

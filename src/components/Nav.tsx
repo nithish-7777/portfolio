@@ -1,30 +1,37 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { profile } from "@/data/site";
+import { certifications, lenses, profile, type Lens } from "@/data/site";
+import { useLens } from "./Lens";
+import { ScrollProgress } from "./Motion";
 
-type Command = { label: string; hint: string; href: string; external?: boolean };
+type Command = { label: string; hint: string; href?: string; external?: boolean; lens?: Lens };
 
 const sections: Command[] = [
   { label: "About", hint: "Section", href: "#about" },
+  { label: "Services", hint: "Section", href: "#services" },
+  { label: "Work", hint: "Section", href: "#work" },
   { label: "Education", hint: "Section", href: "#tracks" },
-  { label: "Case files", hint: "Section", href: "#work" },
-  { label: "Risk playground", hint: "Section", href: "#playground" },
+  { label: "Milestones", hint: "Section", href: "#milestones" },
+  ...(certifications.length ? [{ label: "Certifications", hint: "Section", href: "#certs" }] : []),
   { label: "Stack", hint: "Section", href: "#stack" },
   { label: "Lab", hint: "Section", href: "#lab" },
   { label: "Contact", hint: "Section", href: "#contact" },
 ];
 
-const links: Command[] = [
+const commands: Command[] = [
+  ...sections,
+  ...lenses.map((lens) => ({ label: `Read as ${lens.label.toLowerCase()}`, hint: "View", lens: lens.id })),
+  { label: "Send an email", hint: "Link", href: `mailto:${profile.email}` },
   { label: "Open GitHub", hint: "Link", href: profile.github, external: true },
   ...(profile.linkedin ? [{ label: "Open LinkedIn", hint: "Link", href: profile.linkedin, external: true }] : []),
   ...(profile.resumeUrl ? [{ label: "Open resume", hint: "Link", href: profile.resumeUrl, external: true }] : []),
-  ...(profile.email ? [{ label: "Send an email", hint: "Link", href: `mailto:${profile.email}` }] : []),
 ];
 
-const commands = [...sections, ...links];
+const primary = ["Services", "Work", "Education", "Milestones", "Stack", "Contact"];
 
 export function Nav() {
+  const { setLens } = useLens();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
@@ -43,8 +50,9 @@ export function Nav() {
 
   const run = (command: Command) => {
     close();
-    if (command.external) window.open(command.href, "_blank", "noreferrer");
-    else window.location.href = command.href;
+    if (command.lens) setLens(command.lens);
+    else if (command.external) window.open(command.href, "_blank", "noreferrer");
+    else if (command.href) window.location.href = command.href;
   };
 
   useEffect(() => {
@@ -77,17 +85,18 @@ export function Nav() {
 
   return (
     <>
+      <ScrollProgress />
       <header className="fixed inset-x-0 top-0 z-30">
         <div className="mx-auto flex max-w-[92rem] items-center justify-between px-5 py-4 sm:px-8">
           <a
             href="#top"
             className="rounded-full border border-line bg-bg/70 px-4 py-2 font-mono text-xs tracking-wide backdrop-blur-md"
           >
-            NRV<span className="text-flag">_</span>
+            NRV<span className="text-hot">_</span>
           </a>
-          <nav className="hidden items-center gap-1 rounded-full border border-line bg-bg/70 p-1 font-mono text-xs backdrop-blur-md md:flex">
+          <nav className="hidden items-center gap-1 rounded-full border border-line bg-bg/70 p-1 font-mono text-xs backdrop-blur-md lg:flex">
             {sections
-              .filter((section) => section.label !== "Risk playground")
+              .filter((section) => primary.includes(section.label))
               .map((section) => (
                 <a
                   key={section.href}
@@ -115,7 +124,7 @@ export function Nav() {
           role="dialog"
           aria-modal="true"
           aria-label="Command palette"
-          className="fixed inset-0 z-50 flex items-start justify-center bg-black/70 px-4 pt-[18vh] backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-start justify-center bg-black/70 px-4 pt-[16vh] backdrop-blur-sm"
           onClick={close}
         >
           <div
@@ -146,7 +155,7 @@ export function Nav() {
                     }`}
                   >
                     {command.label}
-                    <span className="font-mono text-[10px] uppercase tracking-widest">{command.hint}</span>
+                    <span className="font-mono text-[10px] tracking-widest uppercase">{command.hint}</span>
                   </button>
                 </li>
               ))}

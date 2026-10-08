@@ -22,11 +22,11 @@ export function Tracks() {
             <span className="absolute inset-y-0 left-0 w-px bg-line" />
             <motion.span
               style={{ scaleY: rail }}
-              className={`absolute inset-y-0 left-0 w-px origin-top ${index === 0 ? "bg-flag" : "bg-clear"}`}
+              className={`absolute inset-y-0 left-0 w-px origin-top ${index === 0 ? "bg-hot" : "bg-lime"}`}
             />
             <span
               className={`absolute -left-[5px] top-1 h-[11px] w-[11px] rounded-full border-2 border-bg ${
-                index === 0 ? "bg-flag" : "bg-clear"
+                index === 0 ? "bg-hot" : "bg-lime"
               }`}
             />
             <p className="font-mono text-xs tracking-widest text-muted">
@@ -36,7 +36,7 @@ export function Tracks() {
             <p className="mt-2 text-muted">{track.school}</p>
             <p
               className={`mt-5 inline-block rounded-full border px-3 py-1 font-mono text-xs ${
-                index === 0 ? "border-flag/50 text-flag" : "border-clear/50 text-clear"
+                index === 0 ? "border-hot/50 text-hot" : "border-lime/50 text-lime"
               }`}
             >
               {track.highlight}
@@ -67,14 +67,14 @@ export function Tracks() {
         <motion.path
           d="M0,0 C0,26 50,12 50,40"
           fill="none"
-          stroke="var(--flag)"
+          stroke="var(--hot)"
           vectorEffect="non-scaling-stroke"
           style={{ pathLength: merge }}
         />
         <motion.path
           d="M50,0 L50,40"
           fill="none"
-          stroke="var(--clear)"
+          stroke="var(--lime)"
           vectorEffect="non-scaling-stroke"
           style={{ pathLength: merge }}
         />

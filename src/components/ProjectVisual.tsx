@@ -16,14 +16,14 @@ function Fraud() {
         <li
           key={row.id}
           className={`flex items-center justify-between rounded-lg border px-3 py-2.5 ${
-            row.flagged ? "pulse-flag border-flag text-flag" : "border-line text-muted"
+            row.flagged ? "pulse-hot border-hot text-hot" : "border-line text-muted"
           }`}
         >
           <span>{row.id}</span>
           <span>{row.amount}</span>
           <span className="flex items-center gap-2">
             {row.score}
-            <span className={`h-1.5 w-1.5 rounded-full ${row.flagged ? "bg-flag" : "bg-clear"}`} />
+            <span className={`h-1.5 w-1.5 rounded-full ${row.flagged ? "bg-hot" : "bg-lime"}`} />
           </span>
         </li>
       ))}
@@ -39,16 +39,16 @@ function Attendance() {
         {cells.map((present, index) => (
           <span
             key={index}
-            className={`aspect-square rounded-[4px] ${present ? "bg-clear/80" : "border border-line"}`}
+            className={`aspect-square rounded-[4px] ${present ? "bg-lime/80" : "border border-line"}`}
           />
         ))}
       </div>
       <div className="relative mt-4 h-8">
-        <span className="swap-a absolute inset-0 flex items-center gap-2 text-flag">
-          <span className="h-1.5 w-1.5 rounded-full bg-flag" /> Offline · 3 entries queued
+        <span className="swap-a absolute inset-0 flex items-center gap-2 text-hot">
+          <span className="h-1.5 w-1.5 rounded-full bg-hot" /> Offline · 3 entries queued
         </span>
-        <span className="swap-b absolute inset-0 flex items-center gap-2 text-clear">
-          <span className="h-1.5 w-1.5 rounded-full bg-clear" /> Back online · synced
+        <span className="swap-b absolute inset-0 flex items-center gap-2 text-lime">
+          <span className="h-1.5 w-1.5 rounded-full bg-lime" /> Back online · synced
         </span>
       </div>
     </div>
@@ -66,13 +66,13 @@ function Pharmacy() {
     <ul className="w-full space-y-4 font-mono text-xs">
       {stock.map((item) => (
         <li key={item.name}>
-          <div className={`flex justify-between ${item.urgent ? "text-flag" : "text-muted"}`}>
+          <div className={`flex justify-between ${item.urgent ? "text-hot" : "text-muted"}`}>
             <span>{item.name}</span>
             <span>{item.urgent ? `expires in ${item.days}d` : `${item.days}d`}</span>
           </div>
           <div className="mt-1.5 h-1.5 rounded-full bg-line">
             <div
-              className={`h-full rounded-full ${item.urgent ? "pulse-flag bg-flag" : "bg-text/60"}`}
+              className={`h-full rounded-full ${item.urgent ? "pulse-hot bg-hot" : "bg-text/60"}`}
               style={{ width: item.width }}
             />
           </div>
@@ -95,11 +95,11 @@ function Route() {
       ].map(([cx, cy]) => (
         <circle key={cx} cx={cx} cy={cy} r="4" fill="var(--bg)" stroke="var(--muted)" />
       ))}
-      <circle cx="340" cy="40" r="6" fill="none" stroke="var(--clear)" />
-      <text x="282" y="22" fontSize="10" fill="var(--clear)">
+      <circle cx="340" cy="40" r="6" fill="none" stroke="var(--lime)" />
+      <text x="282" y="22" fontSize="10" fill="var(--lime)">
         SCHOOL
       </text>
-      <circle r="6" fill="var(--flag)">
+      <circle r="6" fill="var(--hot)">
         <animateMotion dur="7s" repeatCount="indefinite" path={path} />
       </circle>
       <text x="20" y="182" fontSize="10" fill="var(--muted)">
@@ -123,18 +123,18 @@ function Skills() {
           <li key={row.skill} className="grid grid-cols-[4.5rem_1fr] items-center gap-3 text-muted">
             <span>{row.skill}</span>
             <span className="relative h-2 rounded-full bg-line">
-              <span className="absolute inset-y-0 left-0 rounded-full bg-flag/50" style={{ width: row.demand }} />
-              <span className="absolute inset-y-0 left-0 rounded-full bg-clear" style={{ width: row.have }} />
+              <span className="absolute inset-y-0 left-0 rounded-full bg-hot/50" style={{ width: row.demand }} />
+              <span className="absolute inset-y-0 left-0 rounded-full bg-lime" style={{ width: row.have }} />
             </span>
           </li>
         ))}
       </ul>
       <p className="mt-5 flex gap-5 text-muted">
         <span className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-clear" /> You
+          <span className="h-1.5 w-1.5 rounded-full bg-lime" /> You
         </span>
         <span className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-flag/60" /> Gap to market demand
+          <span className="h-1.5 w-1.5 rounded-full bg-hot/60" /> Gap to market demand
         </span>
       </p>
     </div>
@@ -149,7 +149,7 @@ function Split() {
         <p className="text-muted">Total</p>
         <p className="mt-1 font-head text-3xl font-semibold text-text">₹2,400</p>
         <p className="mt-4 text-muted">÷ 4 people</p>
-        <p className="mt-1 text-lg text-clear">₹600 each</p>
+        <p className="mt-1 text-lg text-lime">₹600 each</p>
       </div>
       <div className="grid w-32 grid-cols-9 gap-[3px] rounded-lg border border-line p-2.5">
         {cells.map((filled, index) => (

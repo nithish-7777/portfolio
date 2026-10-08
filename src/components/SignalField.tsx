@@ -2,17 +2,17 @@
 
 import { useEffect, useRef } from "react";
 
-type Flag = { x: number; y: number; born: number; score: number };
+type Ping = { x: number; y: number; born: number; warm: boolean };
 
 const GAP = 30;
-const FLAG_LIFE = 3800;
+const PING_LIFE = 3200;
 const TEXT = "236,232,223";
-const FLAGGED = "255,77,31";
-const CLEARED = "205,245,69";
+const WARM = "255,77,31";
+const LIME = "205,245,69";
 
 /**
- * Hero background: a field of data points that drifts like a signal. Every so
- * often one point is flagged as an anomaly, scored, then cleared.
+ * Hero background: a field of points that drifts like a slow wave, bends away
+ * from the cursor and lights up with the occasional pulse.
  */
 export function SignalField() {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -23,14 +23,13 @@ export function SignalField() {
     if (!canvas || !ctx) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const font = `10px ${getComputedStyle(canvas).fontFamily}`;
     const pointer = { x: -9999, y: -9999 };
     let width = 0;
     let height = 0;
     let raf = 0;
     let visible = true;
     let lastSpawn = 0;
-    let flags: Flag[] = [];
+    let pings: Ping[] = [];
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -45,11 +44,11 @@ export function SignalField() {
     const spawn = (now: number) => {
       const cols = Math.floor(width / GAP);
       const rows = Math.floor(height / GAP);
-      flags.push({
+      pings.push({
         x: GAP / 2 + Math.floor(Math.random() * cols) * GAP,
         y: GAP / 2 + Math.floor(Math.random() * rows) * GAP,
         born: now,
-        score: 0.81 + Math.random() * 0.18,
+        warm: Math.random() < 0.5,
       });
       lastSpawn = now;
     };
@@ -80,31 +79,24 @@ export function SignalField() {
         }
       }
 
-      if (now - lastSpawn > 1200 && flags.length < 5) spawn(now);
-      flags = flags.filter((flag) => now - flag.born < FLAG_LIFE);
+      if (now - lastSpawn > 1100 && pings.length < 5) spawn(now);
+      pings = pings.filter((ping) => now - ping.born < PING_LIFE);
 
-      ctx.font = font;
-      for (const flag of flags) {
-        const age = (now - flag.born) / FLAG_LIFE;
-        const cleared = age > 0.62;
-        const color = cleared ? CLEARED : FLAGGED;
-        const fade = Math.min(1, age * 8) * Math.min(1, (1 - age) * 5);
-        const ring = cleared ? (age - 0.62) / 0.38 : age / 0.62;
+      for (const ping of pings) {
+        const age = (now - ping.born) / PING_LIFE;
+        const color = ping.warm ? WARM : LIME;
+        const fade = Math.min(1, age * 8) * Math.min(1, (1 - age) * 4);
 
-        ctx.strokeStyle = `rgba(${color},${(1 - ring) * 0.7 * fade})`;
+        ctx.strokeStyle = `rgba(${color},${(1 - age) * 0.6 * fade})`;
         ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.arc(flag.x, flag.y, 5 + ring * 24, 0, Math.PI * 2);
+        ctx.arc(ping.x, ping.y, 4 + age * 34, 0, Math.PI * 2);
         ctx.stroke();
 
         ctx.fillStyle = `rgba(${color},${fade})`;
         ctx.beginPath();
-        ctx.arc(flag.x, flag.y, 3, 0, Math.PI * 2);
+        ctx.arc(ping.x, ping.y, 2.5, 0, Math.PI * 2);
         ctx.fill();
-
-        const label = cleared ? "cleared" : `risk ${flag.score.toFixed(2)}`;
-        ctx.fillStyle = `rgba(${color},${fade * 0.9})`;
-        ctx.fillText(label, flag.x + 11, flag.y + 3);
       }
 
       if (!reduce && visible) raf = requestAnimationFrame(draw);
@@ -143,5 +135,5 @@ export function SignalField() {
     };
   }, []);
 
-  return <canvas ref={ref} aria-hidden className="signal-field absolute inset-0 h-full w-full font-mono" />;
+  return <canvas ref={ref} aria-hidden className="signal-field absolute inset-0 h-full w-full" />;
 }
