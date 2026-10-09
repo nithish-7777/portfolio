@@ -24,6 +24,8 @@ export function SignalField() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     // Phones get a sparser field at a lower resolution and half the frame rate.
     const light = window.matchMedia("(pointer: coarse)").matches;
+    // On phones the shader behind this carries the hero; skip the dots to save work.
+    if (light) return;
     const GAP = light ? 40 : 30;
     let lastFrame = 0;
     const pointer = { x: -9999, y: -9999 };

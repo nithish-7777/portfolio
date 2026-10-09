@@ -72,7 +72,7 @@ export function KineticName({ lines, label }: { lines: string[]; label: string }
       {lines.map((line) => (
         <span key={line} aria-hidden className="block whitespace-nowrap">
           {Array.from(line).map((char, index) => (
-            <span key={index} data-letter className="inline-block" style={{ animationDelay: `${index * 45}ms` }}>
+            <span key={index} data-letter className="inline-block" style={{ animationDelay: `${700 + index * 45}ms` }}>
               {char === " " ? " " : char}
             </span>
           ))}

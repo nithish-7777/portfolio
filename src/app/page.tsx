@@ -10,8 +10,10 @@ import { Nav } from "@/components/Nav";
 import { PhoneFrame, ProjectVisual } from "@/components/ProjectVisual";
 import { Reveal } from "@/components/Reveal";
 import { Secret } from "@/components/Secret";
+import { ShaderField } from "@/components/ShaderField";
 import { SignalField } from "@/components/SignalField";
 import { Tracks } from "@/components/Tracks";
+import { CardStack, DepthCard, Magnetic, Marquee, Scramble, SmoothScroll, SplitReveal } from "@/components/Wow";
 import {
   achievements,
   type Award,
@@ -34,7 +36,11 @@ const shell = "mx-auto w-full max-w-[92rem] px-5 sm:px-8";
 // The number before each label comes from a CSS counter, so it stays correct
 // when the sections are reordered for a different reader.
 function Label({ children }: { children: string }) {
-  return <p className="section-label font-mono text-xs tracking-widest text-muted uppercase">{children}</p>;
+  return (
+    <p className="section-label font-mono text-xs tracking-widest text-muted uppercase">
+      <Scramble text={children} />
+    </p>
+  );
 }
 
 function Section({
@@ -54,7 +60,7 @@ function Section({
         <Label>{label}</Label>
         {title && (
           <h2 className="mt-5 max-w-4xl font-head text-4xl leading-[1.02] font-semibold tracking-tight text-balance sm:text-6xl">
-            {title}
+            <SplitReveal text={title} />
           </h2>
         )}
       </Reveal>
@@ -185,10 +191,11 @@ export default function Home() {
 
     work: (
       <Section id="work" label="Work" title="Each one started with a problem, not a tech stack.">
-        <div className="space-y-6">
+        <CardStack className="space-y-6">
           {projects.map((project, index) => (
-            <Spotlight
-              as="article"
+            <DepthCard
+              index={index}
+              total={projects.length}
               key={project.title}
               style={{ top: `${5.5 + index * 0.9}rem` }}
               className="glass-deep grid gap-8 rounded-3xl p-6 sm:p-10 lg:sticky lg:grid-cols-[1.15fr_1fr] lg:items-center"
@@ -232,9 +239,9 @@ export default function Home() {
                 </div>
               </div>
               <ProjectVisual kind={project.visual} shot={project.shot} title={project.title} />
-            </Spotlight>
+            </DepthCard>
           ))}
-        </div>
+        </CardStack>
         <GitHubPulse />
       </Section>
     ),
@@ -412,11 +419,17 @@ export default function Home() {
         <span />
         <span />
       </div>
+      <div aria-hidden className="curtain">
+        <span />
+        <span />
+      </div>
+      <SmoothScroll />
       <CursorLens />
       <Nav />
 
       <main id="top">
         <section className="relative flex min-h-svh flex-col justify-end overflow-hidden pt-28 pb-24">
+          <ShaderField />
           <SignalField />
           <div className={`${shell} relative`}>
             <p className="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs tracking-widest text-muted uppercase">
@@ -437,15 +450,19 @@ export default function Home() {
                   ))}
                 </ul>
                 <div className="flex flex-wrap gap-3 text-sm font-medium">
-                  <a href="#about" className="rounded-full bg-text px-6 py-3 text-bg transition-opacity hover:opacity-85">
-                    About me
-                  </a>
-                  <a
-                    href="#work"
-                    className="glass rounded-full px-6 py-3 transition-colors hover:border-text"
-                  >
-                    See my work
-                  </a>
+                  <Magnetic>
+                    <a
+                      href="#about"
+                      className="block rounded-full bg-text px-6 py-3 text-bg transition-opacity hover:opacity-85"
+                    >
+                      About me
+                    </a>
+                  </Magnetic>
+                  <Magnetic>
+                    <a href="#work" className="glass block rounded-full px-6 py-3 transition-colors hover:border-text">
+                      See my work
+                    </a>
+                  </Magnetic>
                   {profile.resumeUrl && (
                     <a
                       href={profile.resumeUrl}
@@ -461,6 +478,8 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <Marquee words={["Full-stack", "AI / ML", "Security", "Freelance web", "Hackathons", "Chennai"]} />
 
         <LensSections sections={sections} />
       </main>

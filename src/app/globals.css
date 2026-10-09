@@ -30,6 +30,10 @@ html {
   scroll-behavior: smooth;
   background: var(--bg);
 }
+/* The smooth-scroll script takes over on computers. */
+html.lenis {
+  scroll-behavior: auto;
+}
 
 body {
   color: var(--text);
@@ -49,6 +53,50 @@ body {
 @layer components {
 .signal-field {
   mask-image: linear-gradient(to bottom, black 35%, transparent 96%);
+}
+.shader-field {
+  opacity: 0;
+  transition: opacity 1.2s ease 0.4s;
+  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+}
+.shader-field[data-ready="true"] {
+  opacity: 1;
+}
+
+/* Giant outlined words in the scrolling band. */
+.marquee-text {
+  font-size: clamp(3rem, 11vw, 9rem);
+  line-height: 1;
+  font-weight: 800;
+  font-variation-settings: "wdth" 80;
+  color: transparent;
+  -webkit-text-stroke: 1px rgb(236 232 223 / 0.55);
+  white-space: nowrap;
+}
+
+/* Two panels that part to reveal the page when it first loads. */
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+}
+.curtain span {
+  position: absolute;
+  inset-inline: 0;
+  height: 50.5%;
+  background: var(--bg);
+  animation: curtain 0.9s cubic-bezier(0.7, 0, 0.2, 1) 0.35s forwards;
+}
+.curtain span:first-child {
+  top: 0;
+  border-bottom: 1px solid var(--lime);
+  --to: -101%;
+}
+.curtain span:last-child {
+  bottom: 0;
+  border-top: 1px solid var(--lime);
+  --to: 101%;
 }
 
 .kinetic-name {
@@ -251,6 +299,11 @@ body {
 }
 }
 
+@keyframes curtain {
+  to {
+    transform: translateY(var(--to));
+  }
+}
 @keyframes letter-in {
   from {
     opacity: 0;
@@ -338,6 +391,12 @@ body {
   .aurora span,
   .kinetic-name [data-letter] {
     animation: none;
+  }
+  .curtain {
+    display: none;
+  }
+  .shader-field {
+    transition: none;
   }
   .tilt {
     transform: none;
