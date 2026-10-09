@@ -5,7 +5,7 @@ import { certifications, lenses, profile, type Lens } from "@/data/site";
 import { useLens } from "./Lens";
 import { ScrollProgress } from "./Motion";
 
-type Command = { label: string; hint: string; href?: string; external?: boolean; lens?: Lens };
+type Command = { label: string; hint: string; href?: string; external?: boolean; lens?: Lens; event?: string };
 
 const sections: Command[] = [
   { label: "About", hint: "Section", href: "#about" },
@@ -23,6 +23,7 @@ const sections: Command[] = [
 ];
 
 const commands: Command[] = [
+  { label: "Ask Nithish a question", hint: "Chat", event: "ask-nithish" },
   ...sections,
   ...lenses.map((lens) => ({ label: `Read as ${lens.label.toLowerCase()}`, hint: "View", lens: lens.id })),
   { label: "Send an email", hint: "Link", href: `mailto:${profile.email}` },
@@ -55,7 +56,8 @@ export function Nav() {
 
   const run = (command: Command) => {
     close();
-    if (command.lens) setLens(command.lens);
+    if (command.event) window.dispatchEvent(new Event(command.event));
+    else if (command.lens) setLens(command.lens);
     else if (command.external) window.open(command.href, "_blank", "noreferrer");
     else if (command.href) window.location.href = command.href;
   };
@@ -95,6 +97,7 @@ export function Nav() {
         <div className="mx-auto flex max-w-[92rem] items-center justify-between px-5 py-4 sm:px-8">
           <a
             href="#top"
+            data-logo
             className="glass rounded-full px-4 py-2 font-mono text-xs tracking-wide"
           >
             NRV<span className="text-hot">_</span>

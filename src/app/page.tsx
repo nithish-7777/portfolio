@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { AskNithish } from "@/components/AskNithish";
 import { ContactForm } from "@/components/ContactForm";
 import { AskMe, ChennaiClock, CursorLens, GitHubPulse, Journey, Tilt } from "@/components/Extras";
 import { KineticName } from "@/components/KineticName";
@@ -7,6 +8,7 @@ import { CountUp, ScrollWords, Spotlight } from "@/components/Motion";
 import { Nav } from "@/components/Nav";
 import { PhoneFrame, ProjectVisual } from "@/components/ProjectVisual";
 import { Reveal } from "@/components/Reveal";
+import { Secret } from "@/components/Secret";
 import { SignalField } from "@/components/SignalField";
 import { Tracks } from "@/components/Tracks";
 import {
@@ -466,10 +468,12 @@ export default function Home() {
         className={`${shell} flex flex-wrap justify-between gap-3 border-t border-line pt-6 pb-24 font-mono text-[11px] text-muted`}
       >
         <span>© 2026 {profile.name}</span>
-        <span>Designed and built in Chennai</span>
+        <span>Designed and built in Chennai. Psst: try typing my first name.</span>
       </footer>
 
       <LensDock />
+      <AskNithish />
+      <Secret />
     </LensProvider>
   );
 }
