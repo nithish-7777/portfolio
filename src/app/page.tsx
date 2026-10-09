@@ -10,7 +10,6 @@ import { Nav } from "@/components/Nav";
 import { PhoneFrame, ProjectVisual } from "@/components/ProjectVisual";
 import { Reveal } from "@/components/Reveal";
 import { Secret } from "@/components/Secret";
-import { ShaderField } from "@/components/ShaderField";
 import { SignalField } from "@/components/SignalField";
 import { Tracks } from "@/components/Tracks";
 import { CardStack, DepthCard, Magnetic, Marquee, Scramble, SmoothScroll, SplitReveal } from "@/components/Wow";
@@ -428,8 +427,7 @@ export default function Home() {
       <Nav />
 
       <main id="top">
-        <section className="relative flex min-h-svh flex-col justify-end overflow-hidden pt-28 pb-24">
-          <ShaderField />
+        <section className="relative flex min-h-svh flex-col justify-end overflow-hidden pt-28 pb-36 sm:pb-24">
           <SignalField />
           <div className={`${shell} relative`}>
             <p className="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs tracking-widest text-muted uppercase">

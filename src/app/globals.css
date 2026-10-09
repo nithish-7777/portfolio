@@ -54,14 +54,6 @@ body {
 .signal-field {
   mask-image: linear-gradient(to bottom, black 35%, transparent 96%);
 }
-.shader-field {
-  opacity: 0;
-  transition: opacity 1.2s ease 0.4s;
-  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
-}
-.shader-field[data-ready="true"] {
-  opacity: 1;
-}
 
 /* Giant outlined words in the scrolling band. */
 .marquee-text {
@@ -394,9 +386,6 @@ body {
   }
   .curtain {
     display: none;
-  }
-  .shader-field {
-    transition: none;
   }
   .tilt {
     transform: none;
