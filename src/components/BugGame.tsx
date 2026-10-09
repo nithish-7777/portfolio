@@ -15,11 +15,12 @@ export function BugGame() {
   const [lives, setLives] = useState(LIVES);
   const [over, setOver] = useState(false);
   const [round, setRound] = useState(0);
+  const [started, setStarted] = useState(false);
 
   useEffect(() => {
     const element = canvas.current;
     const ctx = element?.getContext("2d");
-    if (!element || !ctx) return;
+    if (!element || !ctx || !started) return;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let width = element.clientWidth;
@@ -105,7 +106,7 @@ export function BugGame() {
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("keyup", onKeyUp);
     };
-  }, [round]);
+  }, [round, started]);
 
   const restart = () => {
     setScore(0);
@@ -130,6 +131,28 @@ export function BugGame() {
         className="block w-full touch-none"
         aria-label="Game: move the green net left and right to catch falling bugs"
       />
+      {!started && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-5 bg-bg/80 px-6 text-center">
+          <p className="font-head text-3xl font-semibold">Catch the bugs</p>
+          <ul className="space-y-1.5 text-sm leading-relaxed text-muted">
+            <li>Bugs fall from the top. Slide the green net under them.</li>
+            <li>
+              <span className="text-text">Phone:</span> drag your finger across the box.
+            </li>
+            <li>
+              <span className="text-text">Computer:</span> move the mouse, or use the ← → keys.
+            </li>
+            <li>Miss three and the game ends.</li>
+          </ul>
+          <button
+            type="button"
+            onClick={() => setStarted(true)}
+            className="rounded-full bg-lime px-7 py-3 text-sm font-medium text-bg transition-opacity hover:opacity-85"
+          >
+            Start
+          </button>
+        </div>
+      )}
       {over && (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-bg/80 text-center">
           <p className="font-head text-3xl font-semibold">{score} bugs caught</p>

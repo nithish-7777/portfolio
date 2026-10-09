@@ -110,27 +110,57 @@ ${facts.map((fact) => `- ${fact.text}`).join("\n")}
 - In his own words: ${questions.map((question) => `"${question.ask}" ${question.answer}`).join(" ")}
 - ${profile.about.join(" ")}`;
 
+const topics = "his studies, projects, skills, achievements, experience and freelance work";
+
+// Greetings and other small talk, so the basic mode doesn't answer "hi" with a contact card.
+const smallTalk: { pattern: RegExp; reply: string }[] = [
+  {
+    pattern: /^(hi+|hello+|hey+|hii+|yo|hola|vanakkam|namaste|good (morning|afternoon|evening))\b/,
+    reply: `Hi! I can tell you about Nithish: ${topics}. What would you like to know?`,
+  },
+  { pattern: /\b(thanks|thank you|thx|ty|nice|great|cool|awesome|super)\b/, reply: "Glad that helped. Ask me anything else about Nithish." },
+  { pattern: /\b(bye|goodbye|see you|cya)\b/, reply: "Thanks for stopping by. If you want to talk to Nithish himself, the contact section is at the bottom of the page." },
+  { pattern: /\bhow are (you|u)\b|\bwhat'?s up\b/, reply: `Doing well, thanks for asking. I'm here to answer questions about Nithish: ${topics}.` },
+  {
+    pattern: /\b(who|what) are (you|u)\b|\bwhat can (you|u) do\b|\bare (you|u) (a |an )?(bot|ai|human|real)\b|\bhelp\b/,
+    reply: `I'm a small assistant on Nithish's portfolio. Ask me about ${topics}, or how to contact him.`,
+  },
+];
+
+// "projects" should match "project", "hackathons" should match "hackathon".
+const stem = (word: string) => (word.length > 3 && word.endsWith("s") ? word.slice(0, -1) : word);
+
 /**
  * Keyword matcher used when no AI key is configured, so the chat still answers
  * the common questions instead of breaking.
  */
 export function localAnswer(question: string): string {
-  const text = question.toLowerCase();
-  const words = text.split(/[^a-z0-9+#.]+/).filter(Boolean);
+  const text = question.toLowerCase().trim();
+  const words = text.split(/[^a-z0-9+#.]+/).filter(Boolean).map(stem);
+
+  // Short messages are usually small talk; check that before looking for facts.
+  const chat = smallTalk.find((entry) => entry.pattern.test(text));
+  if (chat && words.length <= 5) return chat.reply;
 
   const tool = stackItems.find((item) => text.includes(item.toLowerCase()));
-  if (tool && /\b(use|used|using|know|knows|work|worked|experience|familiar|can)\b/.test(text)) {
+  if (tool && /\b(use|used|using|know|knows|work|worked|experience|familiar|can|does|has)\b/.test(text)) {
     const layer = stack.find((entry) => entry.items.includes(tool));
     return `Yes. ${tool} is part of his stack, in the ${layer?.layer.toLowerCase()} layer alongside ${layer?.items.filter((item) => item !== tool).join(", ")}.`;
   }
 
   const ranked = facts
-    .map((fact) => ({ fact, score: fact.keywords.filter((keyword) => words.includes(keyword) || (keyword.includes(" ") && text.includes(keyword))).length }))
+    .map((fact) => ({
+      fact,
+      score: fact.keywords.filter((keyword) => words.includes(stem(keyword)) || (keyword.includes(" ") && text.includes(keyword))).length,
+    }))
     .filter((entry) => entry.score > 0)
     .sort((a, b) => b.score - a.score);
 
   if (ranked.length === 0) {
-    return `I don't have an answer to that here. ${contactText}`;
+    if (chat) return chat.reply;
+    return `I'm not sure about that one. I can tell you about ${topics}. For anything else, email him at ${profile.email}.`;
   }
-  return ranked[0].fact.text;
+  // When two topics match equally well, answer both.
+  const best = ranked.filter((entry) => entry.score === ranked[0].score).slice(0, 2);
+  return best.map((entry) => entry.fact.text).join(" ");
 }

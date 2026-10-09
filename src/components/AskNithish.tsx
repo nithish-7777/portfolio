@@ -6,6 +6,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 type Turn = { role: "user" | "assistant"; content: string };
 
 const starters = [
+  "Tell me about Nithish",
   "What has he built?",
   "Has he used PostgreSQL?",
   "Does he take freelance work?",
@@ -13,6 +14,31 @@ const starters = [
 ];
 
 const MAX_CHARS = 400;
+
+const LINK = /(https?:\/\/[^\s]+[^\s.,)]|[\w.+-]+@[\w-]+\.[\w.]+\w|\/[\w-]+\.pdf)/g;
+
+/** Turns web addresses and email addresses in an answer into links. */
+function Linked({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(LINK).map((part, index) =>
+        index % 2 === 1 ? (
+          <a
+            key={index}
+            href={part.includes("@") && !part.startsWith("http") ? `mailto:${part}` : part}
+            target="_blank"
+            rel="noreferrer"
+            className="underline underline-offset-2 hover:text-lime"
+          >
+            {part.replace(/^https?:\/\/(www\.)?/, "")}
+          </a>
+        ) : (
+          part
+        ),
+      )}
+    </>
+  );
+}
 
 /** A chat window where visitors ask about Nithish and get answers from his own details. */
 export function AskNithish() {
@@ -135,7 +161,7 @@ export function AskNithish() {
                     turn.role === "user" ? "ml-auto bg-lime text-bg" : "bg-white/8 text-text"
                   }`}
                 >
-                  {turn.content || <span className="pulse-hot text-muted">Thinking…</span>}
+                  {turn.content ? <Linked text={turn.content} /> : <span className="pulse-hot text-muted">Thinking…</span>}
                 </p>
               ))}
             </div>

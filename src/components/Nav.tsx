@@ -26,6 +26,7 @@ const commands: Command[] = [
   { label: "Ask Nithish a question", hint: "Chat", event: "ask-nithish" },
   ...sections,
   ...lenses.map((lens) => ({ label: `Read as ${lens.label.toLowerCase()}`, hint: "View", lens: lens.id })),
+  { label: "Play the bug game", hint: "Fun", href: "/play" },
   { label: "Send an email", hint: "Link", href: `mailto:${profile.email}` },
   { label: "Message on WhatsApp", hint: "Link", href: profile.whatsapp, external: true },
   { label: "Open Instagram", hint: "Link", href: profile.instagram, external: true },

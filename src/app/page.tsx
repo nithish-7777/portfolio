@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { AskNithish } from "@/components/AskNithish";
 import { ContactForm } from "@/components/ContactForm";
 import { AskMe, ChennaiClock, CursorLens, GitHubPulse, Journey, Tilt } from "@/components/Extras";
@@ -468,7 +469,13 @@ export default function Home() {
         className={`${shell} flex flex-wrap justify-between gap-3 border-t border-line pt-6 pb-24 font-mono text-[11px] text-muted`}
       >
         <span>© 2026 {profile.name}</span>
-        <span>Designed and built in Chennai. Psst: try typing my first name.</span>
+        <span>
+          Designed and built in Chennai. Psst: try typing my first name, or{" "}
+          <Link href="/play" className="text-text underline underline-offset-2 hover:text-lime">
+            play a game
+          </Link>
+          .
+        </span>
       </footer>
 
       <LensDock />
