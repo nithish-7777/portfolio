@@ -7,8 +7,17 @@ import { timingSafeEqual } from "node:crypto";
 
 export type Note = { id: string; name: string; message: string; at: string };
 
-const REDIS_URL = process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL;
-const REDIS_TOKEN = process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN;
+// Vercel lets you add a custom prefix when connecting the database (for example
+// STORAGE_KV_REST_API_URL), so match on the ending of the variable name.
+const env = (...endings: string[]) => {
+  for (const ending of endings) {
+    const name = Object.keys(process.env).find((key) => key === ending || key.endsWith(`_${ending}`));
+    if (name && process.env[name]) return process.env[name];
+  }
+  return undefined;
+};
+const REDIS_URL = env("KV_REST_API_URL", "UPSTASH_REDIS_REST_URL");
+const REDIS_TOKEN = env("KV_REST_API_TOKEN", "UPSTASH_REDIS_REST_TOKEN");
 const ADMIN_KEY = process.env.GUESTBOOK_ADMIN_KEY ?? (process.env.NODE_ENV === "development" ? "dev" : "");
 
 const PENDING = "guestbook:pending";
