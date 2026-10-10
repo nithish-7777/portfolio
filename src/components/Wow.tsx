@@ -33,7 +33,14 @@ export function SmoothScroll() {
   useEffect(() => {
     if (window.matchMedia("(pointer: coarse), (prefers-reduced-motion: reduce)").matches) return;
     const lenis = new Lenis({ autoRaf: true, anchors: true, lerp: 0.16 });
-    return () => lenis.destroy();
+    // Sections such as the guestbook and the timeline grow after the page loads.
+    // Re-measure whenever the page's height changes, or scrolling stops short of the end.
+    const observer = new ResizeObserver(() => lenis.resize());
+    observer.observe(document.body);
+    return () => {
+      observer.disconnect();
+      lenis.destroy();
+    };
   }, []);
   return null;
 }

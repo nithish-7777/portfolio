@@ -29,9 +29,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} antialiased`}
     >
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-svh">{children}</body>
     </html>
   );
 }
