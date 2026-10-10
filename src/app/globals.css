@@ -289,6 +289,28 @@ body {
   height: 64px;
   margin: -32px 0 0 -32px;
 }
+/* Over marked elements the lens becomes a solid badge that says what a click will do. */
+.cursor-lens {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bg);
+}
+.cursor-lens[data-label]:not([data-label=""]) {
+  width: 84px;
+  height: 84px;
+  margin: -42px 0 0 -42px;
+  border-color: transparent;
+  background: var(--lime);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: 0 10px 30px -10px rgb(205 245 69 / 0.6);
+  font-size: 11px;
+}
 }
 
 @keyframes curtain {

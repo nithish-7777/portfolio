@@ -10,9 +10,9 @@ export const lenses: { id: Lens; label: string }[] = [
 
 // The order the sections appear in for each kind of reader.
 export const sectionOrder: Record<Lens, string[]> = {
-  everyone: ["about", "ask", "journey", "tracks", "experience", "achievements", "certs", "work", "stack", "lab", "services", "contact"],
-  recruiter: ["about", "ask", "journey", "achievements", "tracks", "experience", "certs", "work", "stack", "lab", "services", "contact"],
-  client: ["about", "services", "work", "ask", "journey", "achievements", "certs", "stack", "experience", "tracks", "lab", "contact"],
+  everyone: ["about", "ask", "journey", "tracks", "experience", "achievements", "certs", "work", "stack", "terminal", "lab", "services", "contact"],
+  recruiter: ["about", "ask", "journey", "achievements", "tracks", "experience", "certs", "work", "stack", "terminal", "lab", "services", "contact"],
+  client: ["about", "services", "work", "ask", "journey", "achievements", "certs", "stack", "terminal", "experience", "tracks", "lab", "contact"],
 };
 
 export const profile = {

@@ -11,6 +11,7 @@ import { PhoneFrame, ProjectVisual } from "@/components/ProjectVisual";
 import { Reveal } from "@/components/Reveal";
 import { Secret } from "@/components/Secret";
 import { SignalField } from "@/components/SignalField";
+import { Terminal } from "@/components/Terminal";
 import { Tracks } from "@/components/Tracks";
 import { CardStack, DepthCard, Magnetic, Marquee, Scramble, SmoothScroll, SplitReveal } from "@/components/Wow";
 import {
@@ -77,6 +78,7 @@ function AwardCard({ award }: { award: Award }) {
         target="_blank"
         rel="noreferrer"
         aria-label={`View certificate: ${award.title}, ${award.event}`}
+        data-cursor="View"
         className="relative block aspect-[7/5] overflow-hidden bg-black/30"
       >
         <Image
@@ -218,6 +220,7 @@ export default function Home() {
                 </ul>
                 <div className="mt-7 flex gap-3 text-sm font-medium">
                   <a
+                    data-cursor="Code"
                     href={project.repo}
                     target="_blank"
                     rel="noreferrer"
@@ -227,6 +230,7 @@ export default function Home() {
                   </a>
                   {project.live && (
                     <a
+                      data-cursor="Visit"
                       href={project.live}
                       target="_blank"
                       rel="noreferrer"
@@ -362,6 +366,14 @@ export default function Home() {
       </Section>
     ),
 
+    terminal: (
+      <Section id="terminal" label="Terminal" title="Prefer a keyboard? Explore from the command line.">
+        <Reveal>
+          <Terminal />
+        </Reveal>
+      </Section>
+    ),
+
     lab: (
       <Section id="lab" label="Lab" title="Ideas I'm still turning over.">
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -463,6 +475,7 @@ export default function Home() {
                   </Magnetic>
                   {profile.resumeUrl && (
                     <a
+                      data-cursor="Open"
                       href={profile.resumeUrl}
                       target="_blank"
                       rel="noreferrer"

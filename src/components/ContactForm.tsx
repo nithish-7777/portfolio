@@ -40,6 +40,7 @@ export function ContactForm() {
           <p className="font-mono text-xs tracking-widest text-muted uppercase">Write to me directly</p>
           <a
             href={`mailto:${profile.email}`}
+            data-cursor="Write"
             className="mt-4 block font-head text-2xl font-semibold break-all transition-colors hover:text-lime sm:text-3xl"
           >
             {profile.email}
@@ -53,6 +54,7 @@ export function ContactForm() {
               {copied ? "Copied" : "Copy address"}
             </button>
             <a
+              data-cursor="Chat"
               href={profile.whatsapp}
               target="_blank"
               rel="noreferrer"
