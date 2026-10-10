@@ -13,26 +13,65 @@ const initials = profile.name
   .map((part) => part[0])
   .join("");
 
-function Face({ back, short, tile, band }: { back?: boolean; short: string; tile: string; band: string }) {
-  const track = tracks[back ? 1 : 0];
+/** Front: the college card. A monogram stands in for the photo. */
+function CollegeFace() {
+  const track = tracks[0];
   return (
-    <div className={`id-face ${back ? "id-face-back" : ""}`}>
+    <div className="id-face">
       <div className="px-5 pt-9">
-        <p className="font-head text-xl leading-none font-extrabold tracking-[0.14em] text-[#1c2b63] uppercase">{short}</p>
+        <p className="font-head text-xl leading-none font-extrabold tracking-[0.14em] text-[#1c2b63] uppercase">
+          SIMATS Engineering
+        </p>
         <p className="mt-1.5 text-[9px] leading-tight font-medium tracking-wide text-[#1c2b63]/70 uppercase">
           {track.school}
         </p>
       </div>
-      {/* A monogram stands in for the photo. */}
       <div className="mx-auto mt-5 grid h-32 w-28 place-items-center rounded-xl bg-[#0a0a09]">
-        <span className="font-head text-5xl font-bold text-lime">{tile}</span>
+        <span className="font-head text-5xl font-bold text-lime">{initials}</span>
       </div>
-      <div className={`absolute inset-x-0 bottom-0 px-4 pt-3 pb-4 text-center text-[#0a0a09] ${band}`}>
+      <div className="absolute inset-x-0 bottom-0 bg-[#8fd9e8] px-4 pt-3 pb-4 text-center text-[#0a0a09]">
         <p className="text-sm font-semibold tracking-wide uppercase">V. Nithish Raaju</p>
         <p className="mt-0.5 text-[11px] leading-snug font-medium">{track.degree}</p>
         <p className="mt-0.5 font-mono text-[10px]">
           {track.place.split(" · ")[1]} · {track.highlight}
         </p>
+      </div>
+    </div>
+  );
+}
+
+const iitmFields = [
+  ["Name", "NITHISH RAAJU V"],
+  ["Level", "FOUNDATION"],
+  ["Program", "BS in Data Science and Applications"],
+  ["Validity", "JAN 2026 – DEC 2026"],
+];
+
+/** Back: laid out after the IIT Madras BS degree card, in its maroon and grey. */
+function IitmFace() {
+  return (
+    <div className="id-face id-face-back">
+      <div className="bg-[#a3302c] px-4 pt-8 pb-3 text-white">
+        <p className="text-[11px] leading-tight font-semibold">भारतीय प्रौद्योगिकी संस्थान मद्रास</p>
+        <p className="mt-1 text-[13px] leading-tight font-bold">Indian Institute of Technology Madras</p>
+        <p className="mt-0.5 text-[9px] leading-tight opacity-85">Chennai - 600036 · BS Degree Programme</p>
+      </div>
+      <div className="mx-auto mt-4 grid h-20 w-[4.5rem] place-items-center rounded-lg bg-[#0a0a09]">
+        <span className="font-head text-3xl font-bold text-lime">{initials}</span>
+      </div>
+      <dl className="mt-4 space-y-1.5 px-4 text-[#1a1a1a]">
+        {iitmFields.map(([label, value]) => (
+          <div key={label} className="grid grid-cols-[3.4rem_1fr] gap-1 text-[10px] leading-snug">
+            <dt className="text-[#555]">{label}</dt>
+            <dd className="font-semibold">: {value}</dd>
+          </div>
+        ))}
+      </dl>
+      <div className="absolute inset-x-0 bottom-0">
+        <p className="bg-[#dcdcdc] px-4 py-2 text-[9px] leading-tight text-[#333]">
+          BS Degree Office, ICSR Building, IIT Madras
+        </p>
+        <div className="h-2.5 bg-[#a3302c]" />
       </div>
     </div>
   );
@@ -161,8 +200,8 @@ export function IdCard() {
           <div className="id-clip" />
           <div className="id-card">
             <div className="id-flip" style={{ transform: `rotateY(${flipped ? 180 : 0}deg)` }}>
-              <Face short="SIMATS Engineering" tile={initials} band="bg-[#8fd9e8]" />
-              <Face back short="IIT Madras" tile="BS" band="bg-lime" />
+              <CollegeFace />
+              <IitmFace />
             </div>
           </div>
         </div>
