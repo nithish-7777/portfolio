@@ -1,5 +1,5 @@
 import { connection } from "next/server";
-import { approvedNotes, configured, submitNote } from "@/lib/guestbook";
+import { approvedNotes, configured, notifyOwner, submitNote } from "@/lib/guestbook";
 
 const MAX_NAME = 40;
 const MAX_MESSAGE = 240;
@@ -69,6 +69,7 @@ export async function POST(request: Request) {
 
   try {
     await submitNote(name, message);
+    await notifyOwner(name, message, new URL("/guestbook/admin", request.url).toString());
     return Response.json({ ok: true });
   } catch (error) {
     console.error("Guestbook: could not save a note", error);

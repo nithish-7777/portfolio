@@ -1,4 +1,5 @@
 import { timingSafeEqual } from "node:crypto";
+import { profile } from "@/data/site";
 
 // Guestbook storage. Notes wait in a pending list until the owner approves
 // them. In production the lists live in Upstash Redis (the Vercel Marketplace
@@ -85,4 +86,31 @@ export function isAdmin(key: string | null) {
   const given = Buffer.from(key);
   const expected = Buffer.from(ADMIN_KEY);
   return given.length === expected.length && timingSafeEqual(given, expected);
+}
+
+/**
+ * Emails the owner when a note arrives, so the admin page doesn't need to be
+ * checked by hand. Uses Resend; does nothing until RESEND_API_KEY is set.
+ * A failed email never blocks the note from being saved.
+ */
+export async function notifyOwner(name: string, message: string, adminUrl: string) {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) return;
+  try {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { authorization: `Bearer ${key}`, "content-type": "application/json" },
+      body: JSON.stringify({
+        // Resend's shared sender. It delivers only to the address the Resend account was created with.
+        from: process.env.NOTIFY_FROM ?? "Portfolio guestbook <onboarding@resend.dev>",
+        to: [process.env.NOTIFY_EMAIL ?? profile.email],
+        subject: `New guestbook note from ${name}`,
+        text: `${name} left a note on your portfolio:\n\n"${message}"\n\nIt is waiting for your approval. Approve or reject it here:\n${adminUrl}\n`,
+      }),
+      signal: AbortSignal.timeout(6000),
+    });
+    if (!response.ok) console.error(`Guestbook: notification email was refused (${response.status})`, await response.text());
+  } catch (error) {
+    console.error("Guestbook: could not send the notification email", error);
+  }
 }
