@@ -1,10 +1,11 @@
 "use client";
 
-import { createContext, useContext, useEffect, useRef, useSyncExternalStore } from "react";
+import { createContext, useContext, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Lenis from "lenis";
 import {
   motion,
   useAnimationFrame,
+  useMotionValueEvent,
   useInView,
   useMotionValue,
   useReducedMotion,
@@ -31,7 +32,7 @@ function useMedia(query: string) {
 export function SmoothScroll() {
   useEffect(() => {
     if (window.matchMedia("(pointer: coarse), (prefers-reduced-motion: reduce)").matches) return;
-    const lenis = new Lenis({ autoRaf: true, anchors: true, lerp: 0.11 });
+    const lenis = new Lenis({ autoRaf: true, anchors: true, lerp: 0.16 });
     return () => lenis.destroy();
   }, []);
   return null;
@@ -212,5 +213,27 @@ export function DepthCard({
     >
       {children}
     </motion.article>
+  );
+}
+
+/**
+ * The page is long, so this button skips the trip: it jumps to the contact
+ * section, and turns into a back-to-top button once you are near the end.
+ */
+export function JumpButton() {
+  const { scrollYProgress } = useScroll();
+  const [nearEnd, setNearEnd] = useState(false);
+  useMotionValueEvent(scrollYProgress, "change", (value) => setNearEnd(value > 0.88));
+
+  return (
+    <a
+      href={nearEnd ? "#top" : "#contact"}
+      className="glass fixed bottom-20 left-4 z-30 flex items-center gap-2 rounded-full px-4 py-3 font-mono text-xs sm:bottom-4"
+    >
+      <span aria-hidden className={`transition-transform duration-300 ${nearEnd ? "rotate-180" : ""}`}>
+        ↓
+      </span>
+      {nearEnd ? "Top" : "Contact"}
+    </a>
   );
 }

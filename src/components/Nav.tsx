@@ -17,9 +17,9 @@ const sections: Command[] = [
   ...(certifications.length ? [{ label: "Certifications", hint: "Section", href: "#certs" }] : []),
   { label: "Work", hint: "Section", href: "#work" },
   { label: "Stack", hint: "Section", href: "#stack" },
-  { label: "Terminal", hint: "Section", href: "#terminal" },
   { label: "Lab", hint: "Section", href: "#lab" },
   { label: "Services", hint: "Section", href: "#services" },
+  { label: "Guestbook", hint: "Section", href: "#guestbook" },
   { label: "Contact", hint: "Section", href: "#contact" },
 ];
 

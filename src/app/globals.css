@@ -228,6 +228,79 @@ body {
     0 30px 60px -20px rgb(0 0 0 / 0.9);
 }
 
+/* Student ID on a lanyard. The whole thing pivots from the top of the strap. */
+.id-swing {
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: 50% 0;
+  transform: rotate(calc(var(--swing, 0rad) * -1));
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.id-swing:active {
+  cursor: grabbing;
+}
+.id-strap {
+  width: 16px;
+  height: 130px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #14532d, #22c55e 45%, #166534);
+}
+.id-clip {
+  width: 38px;
+  height: 16px;
+  margin-top: -2px;
+  border-radius: 5px;
+  background: linear-gradient(#d8d8d3, #8a8a85);
+}
+.id-card {
+  width: 15rem;
+  aspect-ratio: 5 / 7.6;
+  margin-top: -4px;
+  perspective: 1200px;
+  transform-origin: 50% 0;
+  transform: rotate(var(--lag, 0rad));
+}
+.id-flip {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.id-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 1.1rem;
+  background: #f4f1ea;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow:
+    0 30px 60px -20px rgb(0 0 0 / 0.8),
+    inset 0 0 0 5px rgb(255 255 255 / 0.6),
+    inset 0 0 0 6px rgb(0 0 0 / 0.08);
+}
+.id-face::before {
+  content: "";
+  position: absolute;
+  top: 11px;
+  left: 50%;
+  width: 44px;
+  height: 9px;
+  margin-left: -22px;
+  border-radius: 9px;
+  background: var(--bg);
+}
+.id-face-back {
+  transform: rotateY(180deg);
+}
+
 /* 3D tilt toward the pointer, with a holographic sheen. */
 .tilt {
   position: relative;
@@ -288,28 +361,6 @@ body {
   width: 64px;
   height: 64px;
   margin: -32px 0 0 -32px;
-}
-/* Over marked elements the lens becomes a solid badge that says what a click will do. */
-.cursor-lens {
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 0;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--bg);
-}
-.cursor-lens[data-label]:not([data-label=""]) {
-  width: 84px;
-  height: 84px;
-  margin: -42px 0 0 -42px;
-  border-color: transparent;
-  background: var(--lime);
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-  box-shadow: 0 10px 30px -10px rgb(205 245 69 / 0.6);
-  font-size: 11px;
 }
 }
 
@@ -410,6 +461,10 @@ body {
     display: none;
   }
   .tilt {
+    transform: none;
+  }
+  .id-swing,
+  .id-card {
     transform: none;
   }
   .swap-b {

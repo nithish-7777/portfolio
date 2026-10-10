@@ -27,15 +27,8 @@ export function CursorLens() {
       target.x = event.clientX;
       target.y = event.clientY;
       lens.dataset.on = "true";
-      const element = event.target as Element | null;
-      const interactive = element?.closest?.("a, button, input, textarea, [role=radio]");
+      const interactive = (event.target as Element | null)?.closest?.("a, button, input, textarea, [role=radio]");
       lens.dataset.active = interactive ? "true" : "false";
-      // Anything marked data-cursor turns the lens into a labelled badge.
-      const label = element?.closest?.<HTMLElement>("[data-cursor]")?.dataset.cursor ?? "";
-      if (lens.dataset.label !== label) {
-        lens.dataset.label = label;
-        lens.textContent = label;
-      }
     };
     const onLeave = () => {
       lens.dataset.on = "false";
